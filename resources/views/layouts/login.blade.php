@@ -14,14 +14,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    {{-- Bootstrap 4 --}}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     {{-- Scripts --}}
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <link href="{{ asset('js/app.js') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -76,45 +72,9 @@
             </div>
         </nav>
 
-        <main class="container-fluid pt-4">
-            <div class="row">
-                {{-- Sidebar --}}
-                <div class="col-md-2">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Pokemons</a>
-                            <ul>
-                                <li class="nav-item"><a href="{{ route('pokemon.add') }}">Add Pokemon</a></li>
-                                <li class="nav-item"><a href="#">List Pokemons</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                {{-- #Sidebar --}}
-                {{-- Content --}}
-                <div class="col-md-10">
-                    @yield('content')
-                </div>
-                {{-- #Content --}}
-            </div>
+        <main class="py-4">
+            @yield('content')
         </main>
     </div>
-    {{-- Scripts --}}
-    {{-- Bootstrap 4  --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    {{-- Validation --}}
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
-
-    <script src="{{ asset('js/form-validation.js') }}" defer></script>
-    <script src="{{ asset('js/custom.js') }}" defer></script>
-
-
-    <script type="text/javascript">
-        jQuery(document).ready(function() {
-            FormValidation.init();
-        });
-    </script>
 </body>
 </html>

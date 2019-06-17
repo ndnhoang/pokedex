@@ -35,7 +35,17 @@ class PokemonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $rules = [
+            'number' => 'required|unique:pokemons',
+            'name'   => 'required|unique:pokemons',
+            'avatar' => 'required|image|mimes:jpeg,jpg,png',
+        ];
+        $messages = [
+            'number.required' => ''
+        ];
+        $validator = Validator::make($data, $rules, $messages);
+        
     }
 
     /**

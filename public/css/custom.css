@@ -1,0 +1,13 @@
+img.preview {
+  width: 200px;
+  margin: 5px 0;
+}
+
+.was-validated .is-invalid .custom-file-label {
+  border-color: #e3342f !important;
+}
+
+.was-validated .is-invalid:focus .custom-file-label {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+

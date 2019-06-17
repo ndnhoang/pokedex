@@ -17,6 +17,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 // Pokemon
 Route::get('/pokemon/add', 'PokemonController@create')->name('pokemon.add');
+Route::post('/pokemon/add', 'PokemonController@store')->name('pokemon.add');
 
 
 
