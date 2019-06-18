@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form class="form needs-validation" action="{{ route('pokemon.add') }}" method="post" id="add_pokemon_form" enctype="multipart/form-data">
+                <form class="form needs-validation" action="{{ route('pokemon.edit', ['id' => $pokemon->id]) }}" method="post" id="edit_pokemon_form" enctype="multipart/form-data">
                     @csrf
-                    <div class="card-header">Add Pokemon</div>
+                    <div class="card-header">Edit Pokemon</div>
 
                     <div class="card-body">
                         <div class="alert alert-danger alert-dismissible fade d-none">
@@ -29,24 +29,28 @@
 
                         <div class="form-group">
                             <label for="number">Number <span class="text-danger">*</span></label>
-                            <input type="text" name="number" required id="number" value="{{ old('number') }}" class="form-control">
+                            <input type="text" name="number" required id="number" value="{{ old('number') ? old('number') : $pokemon->number }}" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="name">Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name" required id="name" value="{{ old('name') }}" class="form-control">
+                            <input type="text" name="name" required id="name" value="{{ old('name') ? old('name') : $pokemon->name }}" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="name">Avatar <span class="text-danger">*</span></label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="avatar" id="avatar" required>
+                                <input type="file" class="custom-file-input" name="avatar" id="avatar">
                                 <label class="custom-file-label" for="avatar">Choose file</label>
                             </div>
-                            <img class="preview" src="{{ asset('images/no-image.jpg') }}" alt="Avatar" />
+                            @if ($pokemon->avatar)
+                                <img class="preview" src="{{ Storage::url($pokemon->image->getUrl($pokemon->avatar)) }}" alt="{{ $pokemon->name }}" />
+                            @else
+                                <img class="preview" src="{{ asset('images/no-image.jpg') }}" alt="Avatar" />
+                            @endif
                         </div>
                     </div>
 
                     <div class="card-footer">
-                        <input type="submit" value="Add" class="btn btn-success">
+                        <input type="submit" value="Update" class="btn btn-success">
                         <a href="{{ route('pokemons') }}" class="btn btn-secondary float-right">Return to list</a>
                     </div>
                 </form>

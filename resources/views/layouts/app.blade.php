@@ -16,6 +16,8 @@
     <!-- Styles -->
     {{-- Bootstrap 4 --}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {{--  DataTable  --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -82,10 +84,10 @@
                 <div class="col-md-2">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Pokemons</a>
+                            <a class="nav-link active" href="{{ route('pokemons') }}">Pokemons</a>
                             <ul>
                                 <li class="nav-item"><a href="{{ route('pokemon.add') }}">Add Pokemon</a></li>
-                                <li class="nav-item"><a href="#">List Pokemons</a></li>
+                                <li class="nav-item"><a href="{{ route('pokemons') }}">List Pokemons</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -106,14 +108,20 @@
     {{-- Validation --}}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+    {{--  DataTable  --}}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     <script src="{{ asset('js/form-validation.js') }}" defer></script>
-    <script src="{{ asset('js/custom.js') }}" defer></script>
+    <script src="{{ asset('js/show-preview.js') }}" defer></script>
+    <script src="{{ asset('js/list-datatable.js') }}" defer></script>
 
 
     <script type="text/javascript">
         jQuery(document).ready(function() {
             FormValidation.init();
+            ShowPreview.init();
+            ListDataTable.init();
         });
     </script>
 </body>

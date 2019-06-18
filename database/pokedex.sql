@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 17, 2019 at 05:54 PM
+-- Generation Time: Jun 18, 2019 at 06:01 PM
 -- Server version: 5.7.22-0ubuntu0.17.10.1
 -- PHP Version: 7.1.17-0ubuntu0.17.10.1
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `images` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `table` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `table` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `meta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` bigint(20) UNSIGNED NOT NULL,
+  `value` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -47,17 +47,6 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2019_06_17_092144_create_pokemons_table', 2),
-(4, '2019_06_17_092853_create_images_table', 2),
-(5, '2019_06_17_094152_add_foreign_to_pokemons_table', 3);
 
 -- --------------------------------------------------------
 
@@ -104,13 +93,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Nhat Hoang', 'hnguyen@nlstech.net', NULL, '$2y$10$GtzPVrsOPoa8fVHQJS1Iqeiu79jjtP1mrU0oQSj3SBpoGf604MQre', NULL, '2019-06-17 01:49:49', '2019-06-17 01:49:49');
-
---
 -- Indexes for dumped tables
 --
 
@@ -118,9 +100,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `images_table_unique` (`table`),
-  ADD KEY `images_value_foreign` (`value`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -158,17 +138,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pokemons`
 --
 ALTER TABLE `pokemons`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -177,12 +157,6 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `images`
---
-ALTER TABLE `images`
-  ADD CONSTRAINT `images_value_foreign` FOREIGN KEY (`value`) REFERENCES `pokemons` (`id`);
 
 --
 -- Constraints for table `pokemons`

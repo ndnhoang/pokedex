@@ -20,7 +20,7 @@ class CreatePokemonsTable extends Migration
             $table->unsignedBigInteger('avatar');
             $table->timestamps();
 
-            
+            $table->foreign('avatar')->references('id')->on('images');
 
         });
     }

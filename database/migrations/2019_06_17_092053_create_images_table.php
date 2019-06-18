@@ -16,12 +16,11 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('url');
-            $table->string('table', 191)->unique();
+            $table->string('table');
             $table->string('meta');
-            $table->unsignedBigInteger('value');
+            $table->unsignedBigInteger('value')->nullable();
             $table->timestamps();
 
-            $table->foreign('value')->references('id')->on('pokemons');
         });
     }
 
