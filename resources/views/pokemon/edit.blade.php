@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form class="form needs-validation" action="{{ route('pokemon.edit', ['id' => $pokemon->id]) }}" method="post" id="edit_pokemon_form" enctype="multipart/form-data">
+                <form class="form needs-validation custom-form" action="{{ route('pokemon.edit', ['id' => $pokemon->id]) }}" method="post" id="edit_pokemon_form" enctype="multipart/form-data">
                     @csrf
                     <div class="card-header">Edit Pokemon</div>
 
@@ -42,7 +42,7 @@
                                 <label class="custom-file-label" for="avatar">Choose file</label>
                             </div>
                             @if ($pokemon->avatar)
-                                <img class="preview" src="{{ Storage::url($pokemon->image->getUrl($pokemon->avatar)) }}" alt="{{ $pokemon->name }}" />
+                                <img class="preview" src="{{ $pokemon->image->getUrl($pokemon->avatar) }}" alt="{{ $pokemon->name }}" />
                             @else
                                 <img class="preview" src="{{ asset('images/no-image.jpg') }}" alt="Avatar" />
                             @endif

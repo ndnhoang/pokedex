@@ -115,6 +115,8 @@
     <script src="{{ asset('js/form-validation.js') }}" defer></script>
     <script src="{{ asset('js/show-preview.js') }}" defer></script>
     <script src="{{ asset('js/list-datatable.js') }}" defer></script>
+    <script src="{{ asset('js/custom.js') }}" defer></script>
+
 
 
     <script type="text/javascript">
@@ -122,6 +124,7 @@
             FormValidation.init();
             ShowPreview.init();
             ListDataTable.init();
+            Custom.init();
         });
     </script>
 </body>

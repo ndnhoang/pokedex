@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form class="form needs-validation" action="{{ route('pokemon.add') }}" method="post" id="add_pokemon_form" enctype="multipart/form-data">
+                <form class="form needs-validation custom-form" action="{{ route('pokemon.add') }}" method="post" id="add_pokemon_form" enctype="multipart/form-data">
                     @csrf
                     <div class="card-header">Add Pokemon</div>
 
@@ -29,7 +29,7 @@
 
                         <div class="form-group">
                             <label for="number">Number <span class="text-danger">*</span></label>
-                            <input type="text" name="number" required id="number" value="{{ old('number') }}" class="form-control">
+                            <input type="text" name="number" required id="number" value="{{ old('number') }}" class="form-control" autofocus>
                         </div>
                         <div class="form-group">
                             <label for="name">Name <span class="text-danger">*</span></label>
