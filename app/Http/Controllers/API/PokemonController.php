@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Pokemon;
-use App\Image;
 use Illuminate\Http\Request;
-use Validator;
-use DB;
-use DataTables;
+use App\Http\Controllers\Controller;
+use App\Pokemon;
 use Storage;
-use Alert;
 
 class PokemonController extends Controller
 {
@@ -18,24 +14,17 @@ class PokemonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $count, $start)
     {
-        if ($request->ajax()) {
-            $pokemons = Pokemon::orderBy('number', 'asc')->get();
-            return DataTables::of($pokemons)
-                ->addColumn('checkbox', function ($pokemon) {
-                    return '<div class="custom-control custom-checkbox"><input type="checkbox" value="'.$pokemon->id.'" id="check-'.$pokemon->number.'" class="custom-control-input"><label class="custom-control-label" for="check-'.$pokemon->number.'"></label></div>';
-                })
-                ->addColumn('pokemon_avatar', function ($pokemon) {
-                    return '<img src="'.$pokemon->image->getUrl($pokemon->avatar).'" alt="'.$pokemon->name.'" />';
-                })
-                ->addColumn('pokemon_name', function ($pokemon) {
-                    return '<a href="'.route('pokemon.edit', ['id' => $pokemon->id]).'">'.$pokemon->name.'</a>';
-                })
-                ->rawColumns(['checkbox', 'pokemon_avatar', 'pokemon_name'])
-                ->make(true);
-        }
-        return view('pokemon.list');
+        return Pokemon::select('id', 'number', 'name', 'avatar')
+            ->orderBy('number', 'asc')
+            ->take($count)
+            ->skip($start - 1)
+            ->get()
+            ->map(function($pokemon) {
+                $pokemon->avatar = $pokemon->image->getUrl($pokemon->avatar);
+                return $pokemon;
+            });
     }
 
     /**

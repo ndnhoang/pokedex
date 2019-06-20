@@ -3,6 +3,7 @@ var ListDataTable = function() {
     var ListPokemon = function() {
         var list = $('#list_pokemon');
         var url = list.attr('url');
+        var remove_form = $('#remove_pokemon_form');
         list.DataTable({
             processing: true,
             serverSide: true,
@@ -34,6 +35,20 @@ var ListDataTable = function() {
                     }
                 }
             }
+        });
+        remove_form.on('submit', function(e) {
+            var remove_arr = [];
+            var checkboxs_child = $('td input[type=checkbox]', list);
+            if (checkboxs_child.length) {
+                checkboxs_child.each(function() {
+                    if (this.checked) {
+                        var id = this.value;
+                        remove_arr.push(id);
+                    }
+                });
+            }
+            console.log(remove_arr.toString());
+            $('input[name=ids]', remove_form).val(remove_arr.toString());
         });
     }
 

@@ -11,3 +11,5 @@
         {{ session('error') }}
     </div>
 @endif
+
+@include('sweetalert::alert')

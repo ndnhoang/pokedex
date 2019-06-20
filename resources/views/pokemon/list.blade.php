@@ -10,8 +10,12 @@
                 <div class="card-header">
                     List Pokemon
                     <div class="tools float-right">
-                        <a class="btn btn-primary" href="{{ route('pokemon.add') }}">Add</a>
-                        <button class="btn btn-secondary" type="button" id="remove_pokemon_btn">Remove</button>
+                        <a class="btn btn-primary btn-sm" href="{{ route('pokemon.add') }}">Add</a>
+                        <form class="form-inline d-inline-flex" action="{{ route('pokemon.delete') }}" method="post" id="remove_pokemon_form">
+                            @csrf
+                            <input type="hidden" name="ids" value="">
+                            <button class="btn btn-secondary btn-sm" type="submit" id="remove_pokemon_btn">Remove</button>
+                        </form>
                     </div>
                 </div>
                 <div class="card-body">

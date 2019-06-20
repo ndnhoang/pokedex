@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Pokemon
+Route::get('/pokemons/{count}/{start}', 'API\PokemonController@index')->name('api.pokemon');

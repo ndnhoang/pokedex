@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 class Image extends Model
 {
@@ -19,7 +20,7 @@ class Image extends Model
         $image = $this->find($id);
         $url = '';
         if ($image) {
-            $url = $image->url;
+            $url = Storage::url($image->url);
         }
         return $url;
     }
