@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{--  DataTable  --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    {{--  Select2 Bootstrap 4  --}}
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2-bootstrap4.min.css') }}">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -90,6 +93,13 @@
                                 <li class="nav-item"><a href="{{ route('pokemons') }}">List Pokemons</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('types') }}">Pokemon Type</a>
+                            <ul>
+                                <li class="nav-item"><a href="{{ route('type.add') }}">Add Pokemon Type</a></li>
+                                <li class="nav-item"><a href="{{ route('types') }}">List Pokemon Type</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 {{-- #Sidebar --}}
@@ -111,6 +121,7 @@
     {{--  DataTable  --}}
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/select2.min.js') }}"></script>
 
     <script src="{{ asset('js/form-validation.js') }}" defer></script>
     <script src="{{ asset('js/show-preview.js') }}" defer></script>

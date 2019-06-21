@@ -15,6 +15,13 @@ class Pokemon extends Model
     {
         return $this->belongsTo('App\Image', 'avatar', 'id');
     }
+
+    
+    public function types()
+    {
+        return $this->belongsToMany('App\PokemonType', 'pokemon_pokemon_type', 'pokemon_id', 'type_id');
+    }
+    
     
     
 }

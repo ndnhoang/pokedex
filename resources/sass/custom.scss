@@ -17,3 +17,105 @@ img {
         }
     }
 }
+
+.select2-selection__choice {
+    color: #fff !important;
+    &[title='Grass'] {
+        background: #11b048;
+        border-color: #11b048 !important;
+    }
+    &[title='Fire'] {
+        background: #fa0807;
+        border-color: #fa0807 !important;
+    }
+    &[title='Water'] {
+        background: #159cd7;
+        border-color: #159cd7 !important;
+    }
+    &[title='Normal'] {
+        background: #d9dadc;
+        border-color: #d9dadc !important;
+    }
+    &[title='Electric'] {
+        background: #fdfd00;
+        border-color: #fdfd00 !important;
+        color: #343a40 !important;
+        .select2-selection__choice__remove {
+            color: #343a40 !important;
+            &:hover {
+                color: #343a40 !important;
+            }
+        }
+    }
+    &[title='Psychic'] {
+        background: #ed2d94;
+        border-color: #ed2d94 !important;
+    }
+    &[title='Fighting'] {
+        background: #dd0605;
+        border-color: #dd0605 !important;
+    }
+    &[title='Rock'] {
+        background: #CE8F01;
+        border-color: #CE8F01 !important;
+    }
+    &[title='Ground'] {
+        background: #fcc000;
+        border-color: #fcc000 !important;
+    }
+    &[title='Flying'] {
+        background: #1ab0f4;
+        border-color: #1ab0f4 !important;
+    }
+    &[title='Bug'] {
+        background: #6BD043;
+        border-color: #6BD043 !important;
+    }
+    &[title='Poison'] {
+        background: #EC1AD1;
+        border-color: #EC1AD1 !important;
+    }
+    &[title='Dark'] {
+        background: #933703;
+        border-color: #933703 !important;
+    }
+    &[title='Ghost'] {
+        background: #031A62;
+        border-color: #031A62 !important;
+    }
+    &[title='Ice'] {
+        background: #B2D9F0;
+        border-color: #B2D9F0 !important;
+    }
+    &[title='Steel'] {
+        background: #80807D;
+        border-color: #80807D !important;
+    }
+    &[title='Dragon'] {
+        background: #7D30A4;
+        border-color: #7D30A4 !important;
+    }
+    &[title='Fairy'] {
+        background: #FD9CFE;
+        border-color: #FD9CFE !important;
+    }
+    .select2-selection__choice__remove {
+        color: #fff !important;
+        &:hover {
+            color: #fff !important;
+        }
+    }
+}
+
+.select2-results__option {
+    &[aria-selected="true"] {
+        display: none;
+    }
+}
+.form-group {
+    &.is-invalid {
+        .select2-selection {
+            border-color: #fa0807;
+        }
+    }
+}

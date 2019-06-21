@@ -10,6 +10,7 @@ use DB;
 use DataTables;
 use Storage;
 use Alert;
+use App\PokemonType;
 
 class PokemonController extends Controller
 {
@@ -45,7 +46,8 @@ class PokemonController extends Controller
      */
     public function create()
     {
-        return view('pokemon.add');
+        $types = PokemonType::all();
+        return view('pokemon.add', compact(['types']));
     }
 
     /**
@@ -124,7 +126,8 @@ class PokemonController extends Controller
     {
         $pokemon = Pokemon::find($id);
         if ($pokemon) {
-            return view('pokemon.edit', compact(['pokemon']));
+            $types = PokemonType::all();
+            return view('pokemon.edit', compact(['pokemon', 'types']));
         } else {
             
             Alert::error('Error', 'No pokemon found.');

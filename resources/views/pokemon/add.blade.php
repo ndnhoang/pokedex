@@ -36,7 +36,17 @@
                             <input type="text" name="name" required id="name" value="{{ old('name') }}" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="name">Avatar <span class="text-danger">*</span></label>
+                            <label for="type">Type <span class="text-danger">*</span></label>
+                            <select id="type" name="type" class="custom-select" multiple placeholder="Select type">
+                                @if ($types)
+                                    @foreach ($types as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="avatar">Avatar <span class="text-danger">*</span></label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="avatar" id="avatar" required>
                                 <label class="custom-file-label" for="avatar">Choose file</label>

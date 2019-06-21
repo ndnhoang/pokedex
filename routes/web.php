@@ -23,5 +23,12 @@ Route::get('/pokemon/edit/{id}', 'PokemonController@edit')->name('pokemon.edit')
 Route::post('/pokemon/edit/{id}', 'PokemonController@update')->name('pokemon.edit');
 Route::post('/pokemon/delete', 'PokemonController@destroy')->name('pokemon.delete');
 
+// Pokemon Type
+Route::get('/type', 'PokemonTypeController@index')->name('types');
+Route::get('/type/add', 'PokemonTypeController@create')->name('type.add');
+Route::post('/type/add', 'PokemonTypeController@store')->name('type.add');
+Route::get('/type/edit/{id}', 'PokemonTypeController@edit')->name('type.edit');
+Route::post('/type/edit/{id}', 'PokemonTypeController@update')->name('type.edit');
+
 
 
