@@ -3,6 +3,7 @@ import './Pokemon.css';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -14,6 +15,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Loading from '../Loading/Loading';
+import LazyLoad from 'react-lazy-load';
+import $ from 'jquery';
 
 const styles = {
   card: {
@@ -47,11 +51,12 @@ class Pokemon extends Component {
       pokemons: [],
       count: ITEM_PER_PAGE,
       start: 1,
+      show: 1,
     };
   }
 
   fetchMoreData = () => {
-    const { count, start } = this.state;
+    const { count } = this.state;
     this.setState({start: this.state.start + count});
     const url = `${API_URL}/pokemons/${count}/${this.state.start}`;
     axios.get(url)
@@ -76,20 +81,29 @@ class Pokemon extends Component {
       .then(res => res.data)
       .then((data) => {
         this.setState({ pokemons: data })
-      });
+    });
+    this.setState({show : 0});
+
   }
 
   render() {
     const { classes } = this.props;
-
+    let loading;
+    if (this.state.show === 1) {
+      loading = <Loading />;
+    } else {
+      loading = '';
+    } 
+    console.log(loading)
     return (
       <div>
+        { loading }
         <InfiniteScroll
           className={classes.scroll}
           dataLength={this.state.pokemons.length}
           next={this.fetchMoreData}
           hasMore={this.state.pokemons.length >= this.state.start}
-          loader={<p>Loading...</p>}
+          loader={<Loading />}
         >
           <Container maxWidth="lg">
             <Grid container spacing={3}>
@@ -97,14 +111,20 @@ class Pokemon extends Component {
                   <Grid item xs={3} key={pokemon.id}>
                     <Card className={classes.card}>
                       <CardActionArea className={classes.imageArea}>
-                        <CardMedia
-                          component="img"
-                          alt={index}
-                          width="100"
-                          image={IMAGE_URL + pokemon.avatar}
-                          title=""
-                          className={classes.media}
-                        />
+                        <LazyLoad 
+                          height={200}
+                          width={200}
+                          className="lazy-block"
+                        >
+                          <CardMedia
+                            component="img"
+                            alt={index}
+                            width="100"
+                            image={IMAGE_URL + pokemon.avatar}
+                            title=""
+                            className={classes.media}
+                          />
+                        </LazyLoad>
                       </CardActionArea>
                       <CardContent className={classes.content}>
                         <Typography gutterBottom component="h6">
