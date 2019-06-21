@@ -3,7 +3,7 @@ var FormValidation = function() {
 	var FormAddPokemon = function() {
 		var form = $('#add_pokemon_form');
 		var error = $('.alert-danger', form);
-		var error_text = error.html();
+		var error_server = $('.alert-server', form);
 
 		form.validate({
 			errorElement: 'div', //default input error message container
@@ -13,7 +13,7 @@ var FormValidation = function() {
 			rules: {
 				number: "required",
 				name: "required",
-				type: "required",
+				'type[]': "required",
 				avatar: {
 					required: true,
 					accept: 'image/*',
@@ -34,12 +34,17 @@ var FormValidation = function() {
 			        error.appendTo(element.parents('.checkbox-inline').attr("data-error-container"));
 			    } else {
 			        error.insertAfter(element); // for other inputs, just perform default behavior
-			    }
+				}
+				if (element.attr('id') == 'type') {
+					var e_select = $('#type-error').next();
+					$('#type-error').remove();
+					error.insertAfter(e_select);
+				}
 			},
 
 			invalidHandler: function(event, validator) { //display error alert on form submit  
-				error.html(error_text);
 				error.addClass('show').removeClass('d-none');
+				error_server.hide();
 				form.addClass('was-validated');
 				// Metronic.scrollTo(error, -200);
 			},
@@ -70,7 +75,7 @@ var FormValidation = function() {
 	var FormEditPokemon = function() {
 		var form = $('#edit_pokemon_form');
 		var error = $('.alert-danger', form);
-		var error_text = error.html();
+		var error_server = $('.alert-server', form);
 
 		form.validate({
 			errorElement: 'div', //default input error message container
@@ -80,6 +85,7 @@ var FormValidation = function() {
 			rules: {
 				number: "required",
 				name: "required",
+				'type[]': "required",
 				avatar: {
 					accept: 'image/*',
 				},
@@ -99,12 +105,17 @@ var FormValidation = function() {
 			        error.appendTo(element.parents('.checkbox-inline').attr("data-error-container"));
 			    } else {
 			        error.insertAfter(element); // for other inputs, just perform default behavior
-			    }
+				}
+				if (element.attr('id') == 'type') {
+					var e_select = $('#type-error').next();
+					$('#type-error').remove();
+					error.insertAfter(e_select);
+				}
 			},
 
 			invalidHandler: function(event, validator) { //display error alert on form submit  
-				error.html(error_text);
 				error.addClass('show').removeClass('d-none');
+				error_server.hide();
 				form.addClass('was-validated');
 			    // Metronic.scrollTo(error, -200);
 			},

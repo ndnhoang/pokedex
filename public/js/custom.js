@@ -8,7 +8,7 @@ var Custom = function() {
             } 
             return true;
         });
-        $('select').each(function () {
+        $('select.select-multi').each(function () {
             $(this).select2({
                 theme: 'bootstrap4',
                 placeholder: $(this).attr('placeholder'),

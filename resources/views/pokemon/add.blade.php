@@ -16,7 +16,7 @@
                         </div>
 
                         @if ($errors->any())
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger alert-server">
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -37,10 +37,14 @@
                         </div>
                         <div class="form-group">
                             <label for="type">Type <span class="text-danger">*</span></label>
-                            <select id="type" name="type" class="custom-select" multiple placeholder="Select type">
+                            <select id="type" name="type[]" class="custom-select select-multi" multiple placeholder="Select type" required>
                                 @if ($types)
                                     @foreach ($types as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @if (old('type') && in_array($type->id, old('type')))
+                                            <option value="{{ $type->id }}" selected>{{ $type->name }}</option>
+                                        @else
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endif
                                     @endforeach
                                 @endif
                             </select>

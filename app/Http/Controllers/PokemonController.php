@@ -63,6 +63,7 @@ class PokemonController extends Controller
             'number' => 'required|unique:pokemons',
             'name'   => 'required|unique:pokemons',
             'avatar' => 'required|image|mimes:jpeg,jpg,png',
+            'type'   => 'required',
         ];
         $validator = Validator::make($data, $rules);
 
@@ -86,6 +87,10 @@ class PokemonController extends Controller
                 $pokemon->name = $request->name;
                 $pokemon->avatar = $avatar->id;
                 $pokemon->save();
+
+                if ($request->type != NULL) {
+                    $pokemon->types()->sync($request->type);
+                }
 
                 $avatar->value = $pokemon->id;
                 $avatar->save();
@@ -126,8 +131,12 @@ class PokemonController extends Controller
     {
         $pokemon = Pokemon::find($id);
         if ($pokemon) {
+            $pokemon_type = [];
+            foreach ($pokemon->types as $type) {
+                $pokemon_type[] = $type->id;
+            }
             $types = PokemonType::all();
-            return view('pokemon.edit', compact(['pokemon', 'types']));
+            return view('pokemon.edit', compact(['pokemon', 'types', 'pokemon_type']));
         } else {
             
             Alert::error('Error', 'No pokemon found.');
@@ -153,6 +162,7 @@ class PokemonController extends Controller
                 'number' => 'required|unique:pokemons,number,'.$id,
                 'name'   => 'required|unique:pokemons,name,'.$id,
                 'avatar' => 'image|mimes:jpeg,jpg,png',
+                'type'   => 'required',
             ];
             $validator = Validator::make($data, $rules);
 
@@ -181,6 +191,10 @@ class PokemonController extends Controller
     
                     $avatar->save();
                     $pokemon->avatar = $avatar->id;
+                }
+
+                if ($request->type != NULL) {
+                    $pokemon->types()->sync($request->type);
                 }
                 
                 $pokemon->save();

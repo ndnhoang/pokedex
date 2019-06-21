@@ -109,7 +109,15 @@ img.preview {
 .form-group.is-invalid .select2-selection {
   border-color: #fa0807;
 }
-
+.form-group.is-invalid .select2-container--focus .select2-selection {
+  box-shadow: 0 0 0 0.2rem rgba(227, 52, 47, 0.25);
+}
+.was-validated .custom-select:valid ~ .select2-container .select2-selection, .custom-select.is-valid ~ .select2-container .select2-selection {
+  border-color: #38c172;
+}
+.was-validated .custom-select:valid ~ .select2-container.select2-container--focus .select2-selection, .custom-select.is-valid ~ .select2-container.select2-container--focus .select2-selection {
+  box-shadow: 0 0 0 0.2rem rgba(56, 193, 114, 0.25);
+} 
 
 
 
