@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pokemon;
+use App\PokemonType;
 use Storage;
 
 class PokemonController extends Controller
@@ -25,6 +26,24 @@ class PokemonController extends Controller
                 $pokemon->types = $pokemon->types;
                 return $pokemon;
             });
+    }
+
+    public function filterPokemonByType(Request $request, $id, $count, $start)
+    {
+        $type = PokemonType::find($id);
+        if ($type) {
+            return $type->pokemons()
+            ->orderBy('number', 'asc')
+            ->take($count)
+            ->skip($start - 1)
+            ->get()
+            ->map(function($pokemon) {
+                $pokemon->avatar = $pokemon->image->getUrl($pokemon->avatar);
+                $pokemon->types = $pokemon->types;
+                return $pokemon;
+            });
+        }
+        return false;
     }
 
     /**

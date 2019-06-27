@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Pokemon
 Route::get('/pokemons/{count}/{start}', 'API\PokemonController@index')->name('api.pokemon');
+Route::get('/pokemons/type/{id}/{count}/{start}', 'API\PokemonController@filterPokemonByType')->name('api.pokemons.type');

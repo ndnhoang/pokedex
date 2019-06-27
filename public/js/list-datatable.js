@@ -13,6 +13,7 @@ var ListDataTable = function() {
                 {data: 'number', name: 'number'},
                 {data: 'pokemon_avatar', name: 'pokemon_avatar', orderable: false, searchable: false},
                 {data: 'pokemon_name', name: 'pokemon_name'},
+                {data: 'pokemon_type', name: 'pokemon_type'},
             ],
             order: [],
         });
