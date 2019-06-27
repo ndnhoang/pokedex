@@ -27,13 +27,25 @@ class PokemonController extends Controller
                 ->addColumn('checkbox', function ($pokemon) {
                     return '<div class="custom-control custom-checkbox"><input type="checkbox" value="'.$pokemon->id.'" id="check-'.$pokemon->number.'" class="custom-control-input"><label class="custom-control-label" for="check-'.$pokemon->number.'"></label></div>';
                 })
+                ->addColumn('pokemon_number', function($pokemon) {
+                    return '<a href="'.route('pokemon.edit', ['id' => $pokemon->id]).'">#'.$pokemon->number.'</a>';
+                })
                 ->addColumn('pokemon_avatar', function ($pokemon) {
                     return '<img src="'.$pokemon->image->getUrl($pokemon->avatar).'" alt="'.$pokemon->name.'" />';
                 })
                 ->addColumn('pokemon_name', function ($pokemon) {
                     return '<a href="'.route('pokemon.edit', ['id' => $pokemon->id]).'">'.$pokemon->name.'</a>';
                 })
-                ->rawColumns(['checkbox', 'pokemon_avatar', 'pokemon_name'])
+                ->addColumn('pokemon_type', function($pokemon) {
+                    $type_text = '';
+                    if ($pokemon->types) {
+                        foreach ($pokemon->types as $type) {
+                            $type_text .= '<span class="btn-type select2-selection__choice" title="'.$type->name.'">'.$type->name.'</span>';
+                        }
+                    }
+                    return $type_text;
+                })
+                ->rawColumns(['checkbox', 'pokemon_number', 'pokemon_avatar', 'pokemon_name', 'pokemon_type'])
                 ->make(true);
         }
         return view('pokemon.list');
@@ -136,7 +148,9 @@ class PokemonController extends Controller
                 $pokemon_type[] = $type->id;
             }
             $types = PokemonType::all();
-            return view('pokemon.edit', compact(['pokemon', 'types', 'pokemon_type']));
+            $pokemon_prev = Pokemon::where('number', '<', $pokemon->number)->max('id');
+            $pokemon_next = Pokemon::where('number', '>', $pokemon->number)->min('id');
+            return view('pokemon.edit', compact(['pokemon', 'types', 'pokemon_type', 'pokemon_prev', 'pokemon_next']));
         } else {
             
             Alert::error('Error', 'No pokemon found.');

@@ -7,7 +7,17 @@
             <div class="card">
                 <form class="form needs-validation custom-form" action="{{ route('pokemon.edit', ['id' => $pokemon->id]) }}" method="post" id="edit_pokemon_form" enctype="multipart/form-data">
                     @csrf
-                    <div class="card-header">Edit Pokemon</div>
+                    <div class="card-header">
+                        Edit Pokemon
+                        <div class="tools float-right">
+                        @if ($pokemon_prev)
+                            <a class="mr-1 btn-prev" href="{{ route('pokemon.edit', ['id' => $pokemon_prev]) }}"><i class="fas fa-chevron-left"></i></a>
+                        @endif
+                        @if ($pokemon_next)
+                            <a class="ml-1 btn-next" href="{{ route('pokemon.edit', ['id' => $pokemon_next]) }}"><i class="fas fa-chevron-right"></i></a>
+                        @endif
+                    </div>
+                    </div>
 
                     <div class="card-body">
                         <div class="alert alert-danger alert-dismissible fade d-none">

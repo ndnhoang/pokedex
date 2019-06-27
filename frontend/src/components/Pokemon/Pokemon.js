@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Pokemon.css';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import PokemonType from './../PokemonType/PokemonType';
 
 
 import PropTypes from 'prop-types';
@@ -17,7 +19,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Loading from '../Loading/Loading';
 import LazyLoad from 'react-lazy-load';
-import $ from 'jquery';
 
 const styles = {
   card: {
@@ -135,9 +136,19 @@ class Pokemon extends Component {
                         </Typography>
                       </CardContent>
                       <CardActions>
-                        <Button size="small" color="primary">
-                          Share
-                        </Button>
+                        <Router>
+                        {pokemon.types.map((type, i) => {
+                          return (
+                            <div>
+                            <Link key={type.id} to="/types/">
+                                {type.name}
+                            </Link>
+                            
+                            </div>
+                          )
+                        })}
+                       
+                        </Router>
                       </CardActions>
                     </Card>
                   </Grid>

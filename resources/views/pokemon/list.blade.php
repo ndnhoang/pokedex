@@ -33,6 +33,7 @@
                                 <th>No.</th>
                                 <th>Avatar</th>
                                 <th>Name</th>
+                                <th>Type</th>
                             </tr>
                         </thead>
                         <tbody>

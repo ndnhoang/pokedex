@@ -3,5 +3,96 @@
 */
 
 .Pokemon {
-    /* propertys here */
+
+}
+
+.App .type__Grass, .App .type__Grass:hover {
+    background: #11b048;
+    border-color: #11b048 !important;
+    color: #ffffff;
+}
+.App .type__Fire, .App .type__Fire:hover {
+    background: #fa0807;
+    border-color: #fa0807 !important;
+    color: #ffffff;
+}
+.App .type__Water, .App .type__Water:hover {
+    background: #159cd7;
+    border-color: #159cd7 !important;
+    color: #ffffff;
+}
+.App .type__Normal, .App .type__Normal:hover {
+    background: #d9dadc;
+    border-color: #d9dadc !important;
+    color: #343a40;
+}
+.App .type__Electric, .App .type__Electric:hover {
+    background: #fdfd00;
+    border-color: #fdfd00 !important;
+    color: #343a40;
+}
+.App .type__Psychic, .App .type__Psychic:hover {
+    background: #ed2d94;
+    border-color: #ed2d94 !important;
+    color: #ffffff;
+}
+.App .type__Fighting, .App .type__Fighting:hover {
+    background: #dd0605;
+    border-color: #dd0605 !important;
+    color: #ffffff;
+}
+.App .type__Rock, .App .type__Rock:hover {
+    background: #CE8F01;
+    border-color: #CE8F01 !important;
+    color: #ffffff;
+}
+.App .type__Ground, .App .type__Ground:hover {
+    background: #fcc000;
+    border-color: #fcc000 !important;
+    color: #ffffff;
+}
+.App .type__Flying, .App .type__Flying:hover {
+    background: #1ab0f4;
+    border-color: #1ab0f4 !important;
+    color: #ffffff;
+}
+.App .type__Bug, .App .type__Bug:hover {
+    background: #6BD043;
+    border-color: #6BD043 !important;
+    color: #ffffff;
+}
+.App .type__Poison, .App .type__Poison:hover {
+    background: #EC1AD1;
+    border-color: #EC1AD1 !important;
+    color: #ffffff;
+}
+.App .type__Dark, .App .type__Dark:hover {
+    background: #933703;
+    border-color: #933703 !important;
+    color: #ffffff;
+}
+.App .type__Ghost, .App .type__Ghost:hover {
+    background: #031A62;
+    border-color: #031A62 !important;
+    color: #ffffff;
+}
+.App .type__Ice, .App .type__Ice:hover {
+    background: #B2D9F0;
+    border-color: #B2D9F0 !important;
+    color: #ffffff;
+}
+.App .type__Steel, .App .type__Steel:hover {
+    background: #80807D;
+    border-color: #80807D !important;
+    color: #ffffff;
+}
+.App .type__Dragon, .App .type__Dragon:hover {
+    background: #7D30A4;
+    border-color: #7D30A4 !important;
+    color: #ffffff;
+}
+.App .type__Fairy, .App .type__Fairy:hover {
+    background: #FD9CFE;
+    border-color: #FD9CFE !important;
+    color: #ffffff;
 }

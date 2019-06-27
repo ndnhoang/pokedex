@@ -20,7 +20,7 @@ class Loading extends Component {
     return (
       <div>
         <div className="loading">
-          <img src="/images/pokeball-loading.gif" alt="Loading..."/>
+          <img src={require("../../images/pokeball-loading.gif")} alt="Loading..."/>
         </div>
       </div>
     );

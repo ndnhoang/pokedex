@@ -16,13 +16,13 @@ class PokemonController extends Controller
      */
     public function index(Request $request, $count, $start)
     {
-        return Pokemon::select('id', 'number', 'name', 'avatar')
-            ->orderBy('number', 'asc')
+        return Pokemon::orderBy('number', 'asc')
             ->take($count)
             ->skip($start - 1)
             ->get()
             ->map(function($pokemon) {
                 $pokemon->avatar = $pokemon->image->getUrl($pokemon->avatar);
+                $pokemon->types = $pokemon->types;
                 return $pokemon;
             });
     }
