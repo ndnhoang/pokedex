@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Loading from '../Loading/Loading';
 import LazyLoad from 'react-lazy-load';
+import Button from '@material-ui/core/Button';
 
 const styles = {
   card: {
@@ -52,11 +53,13 @@ class PokemonType extends Component {
       show: 1,
       type: 0,
     };
+    this.myRef = React.createRef();
   }
 
   fetchMoreData = () => {
     const { count } = this.state;
     const type = this.props.match.params.id;
+    this.setState({start: this.state.start + count});
     const url = `${API_URL}/pokemons/type/${type}/${count}/${this.state.start}`;
     console.log(url)
     axios.get(url)
@@ -78,18 +81,18 @@ class PokemonType extends Component {
     const { count, start } = this.state;
     const type = this.props.match.params.id;
     const url = `${API_URL}/pokemons/type/${type}/${count}/${start}`;
-    console.log(url)
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
         this.setState({ pokemons: data })
     });
-    this.setState({show : 0, type: type, start: this.state.start + count});
+    this.setState({show : 0, type: type});
     
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
     if(nextProps.match.params.id !== prevState.type){
+      window.scrollTo(0, 0);
       return { type: nextProps.match.params.id, start: 1, show: 1};
    } 
    else {
@@ -108,7 +111,7 @@ class PokemonType extends Component {
       .then((data) => {
         this.setState({ pokemons: data })
     });
-    this.setState({show : 0, type: type, start: this.state.start + count});
+    this.setState({show : 0, type: type});
    }
  }
 
@@ -163,8 +166,12 @@ class PokemonType extends Component {
                         
                         {pokemon.types.map((type, i) => {
                           return (
-                            <Link key={type.id} to={"/types/" + type.id}>
+                            <Link key={type.id}
+                             to={"/types/" + type.id}
+                             className="type-link">
+                              <Button variant="contained" className={"type__" + type.name}>
                                 {type.name}
+                              </Button>
                             </Link>
                           )
                         })}

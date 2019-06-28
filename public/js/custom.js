@@ -29,6 +29,8 @@ var Custom = function() {
                 }
             }
         });
+        var type_weakness = [];
+
         
     }
 

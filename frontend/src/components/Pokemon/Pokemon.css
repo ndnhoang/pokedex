@@ -96,3 +96,6 @@
     border-color: #FD9CFE !important;
     color: #ffffff;
 }
+.type-link {
+    text-decoration: none;
+}

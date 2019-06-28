@@ -40,7 +40,8 @@ class PokemonTypeController extends Controller
      */
     public function create()
     {
-        return view('pokemon-type.add');
+        $types = PokemonType::all();
+        return view('pokemon-type.add', compact(['types']));
     }
 
     /**
@@ -63,8 +64,74 @@ class PokemonTypeController extends Controller
         
         DB::beginTransaction();
         try {
+            $weakness = [];
+            $weakness['type_0'] = $request->type_0;
+            $weakness['type_50'] = $request->type_50;
+            $weakness['type_200'] = $request->type_200;
+            if ($weakness['type_0'] == null) $weakness['type_0']= array();
+            if ($weakness['type_50'] == null) $weakness['type_50']= array();
+            if ($weakness['type_200'] == null) $weakness['type_200']= array();
+            
+            $check_same_type_1 = $check_same_type_2 = $check_same_type_3 = null;
+
+            if ($weakness['type_0'] || $weakness['type_50']) {
+                if (count($weakness['type_0']) >= count($weakness['type_50'])) {
+                    $check_same_type_1 = array_diff($weakness['type_0'], $weakness['type_50']);
+                    if (count($check_same_type_1) > 0 && (count($check_same_type_1) < count($weakness['type_0']))) {
+                        $check_same_type_1 = null;
+                    }
+                } else {
+                    $check_same_type_1 = array_diff($weakness['type_50'], $weakness['type_0']);
+                    if (count($check_same_type_1) > 0 && (count($check_same_type_1) < count($weakness['type_50']))) {
+                        $check_same_type_1 = null;
+                    }
+                }
+                
+            } else {
+                $check_same_type_1 = 1;
+            }
+
+            if ($weakness['type_0'] || $weakness['type_200']) {
+                if (count($weakness['type_0']) >= count($weakness['type_200'])) {
+                    $check_same_type_2 = array_diff($weakness['type_0'], $weakness['type_200']);
+                    if (count($check_same_type_2) > 0 && (count($check_same_type_2) < count($weakness['type_0']))) {
+                        $check_same_type_2 = null;
+                    }
+                } else {
+                    $check_same_type_2 = array_diff($weakness['type_200'], $weakness['type_0']);
+                    if (count($check_same_type_2) > 0 && (count($check_same_type_2) < count($weakness['type_200']))) {
+                        $check_same_type_2 = null;
+                    }
+                }
+            } else {
+                $check_same_type_2 = 1;
+            }
+
+            if ($weakness['type_50'] || $weakness['type_200']) {
+                if (count($weakness['type_50']) >= count($weakness['type_200'])) {
+                    $check_same_type_3 = array_diff($weakness['type_50'], $weakness['type_200']);
+                    if (count($check_same_type_3) > 0 && (count($check_same_type_3) < count($weakness['type_50']))) {
+                        $check_same_type_3 = null;
+                    }
+                } else {
+                    $check_same_type_3 = array_diff($weakness['type_200'], $weakness['type_50']);
+                    if (count($check_same_type_3) > 0 && (count($check_same_type_3) < count($weakness['type_200']))) {
+                        $check_same_type_3 = null;
+                    }
+                }
+            } else {
+                $check_same_type_3 = 1;
+            }
+
+            if (!$check_same_type_1 || !$check_same_type_2 || !$check_same_type_3) {
+                DB::rollback();
+                Alert::error('Error', 'Added pokemon type failed, please try again.');
+                return redirect()->back()->withInput();
+            }
+            $weakness = json_encode($weakness);
             $type = new PokemonType();
             $type->name = $request->name;
+            $type->weakness = $weakness;
             $type->save();
 
             DB::commit();
@@ -102,7 +169,17 @@ class PokemonTypeController extends Controller
     {
         $type = PokemonType::find($id);
         if ($type) {
-            return view('pokemon-type.edit', compact(['type']));
+            $types = PokemonType::all();
+            $weakness = $type->weakness;
+            $weakness = json_decode($weakness);
+            $type_0 = $type_50 = $type_200 = null;
+            if ($weakness) {
+                $type_0 = $weakness->type_0;
+                $type_50 = $weakness->type_50;
+                $type_200 = $weakness->type_200;
+            }
+            
+            return view('pokemon-type.edit', compact(['type', 'types', 'type_0', 'type_50', 'type_200']));
         } else {
             
             Alert::error('Error', 'No pokemon type found.');
@@ -135,9 +212,73 @@ class PokemonTypeController extends Controller
            
             DB::beginTransaction();
             try {
-
-                $type->name = $request->name;
+                $weakness = [];
+                $weakness['type_0'] = $request->type_0;
+                $weakness['type_50'] = $request->type_50;
+                $weakness['type_200'] = $request->type_200;
+                if ($weakness['type_0'] == null) $weakness['type_0']= array();
+                if ($weakness['type_50'] == null) $weakness['type_50']= array();
+                if ($weakness['type_200'] == null) $weakness['type_200']= array();
                 
+                $check_same_type_1 = $check_same_type_2 = $check_same_type_3 = null;
+
+                if ($weakness['type_0'] || $weakness['type_50']) {
+                    if (count($weakness['type_0']) >= count($weakness['type_50'])) {
+                        $check_same_type_1 = array_diff($weakness['type_0'], $weakness['type_50']);
+                        if (count($check_same_type_1) > 0 && (count($check_same_type_1) < count($weakness['type_0']))) {
+                            $check_same_type_1 = null;
+                        }
+                    } else {
+                        $check_same_type_1 = array_diff($weakness['type_50'], $weakness['type_0']);
+                        if (count($check_same_type_1) > 0 && (count($check_same_type_1) < count($weakness['type_50']))) {
+                            $check_same_type_1 = null;
+                        }
+                    }
+                    
+                } else {
+                    $check_same_type_1 = 1;
+                }
+
+                if ($weakness['type_0'] || $weakness['type_200']) {
+                    if (count($weakness['type_0']) >= count($weakness['type_200'])) {
+                        $check_same_type_2 = array_diff($weakness['type_0'], $weakness['type_200']);
+                        if (count($check_same_type_2) > 0 && (count($check_same_type_2) < count($weakness['type_0']))) {
+                            $check_same_type_2 = null;
+                        }
+                    } else {
+                        $check_same_type_2 = array_diff($weakness['type_200'], $weakness['type_0']);
+                        if (count($check_same_type_2) > 0 && (count($check_same_type_2) < count($weakness['type_200']))) {
+                            $check_same_type_2 = null;
+                        }
+                    }
+                } else {
+                    $check_same_type_2 = 1;
+                }
+
+                if ($weakness['type_50'] || $weakness['type_200']) {
+                    if (count($weakness['type_50']) >= count($weakness['type_200'])) {
+                        $check_same_type_3 = array_diff($weakness['type_50'], $weakness['type_200']);
+                        if (count($check_same_type_3) > 0 && (count($check_same_type_3) < count($weakness['type_50']))) {
+                            $check_same_type_3 = null;
+                        }
+                    } else {
+                        $check_same_type_3 = array_diff($weakness['type_200'], $weakness['type_50']);
+                        if (count($check_same_type_3) > 0 && (count($check_same_type_3) < count($weakness['type_200']))) {
+                            $check_same_type_3 = null;
+                        }
+                    }
+                } else {
+                    $check_same_type_3 = 1;
+                }
+
+                if (!$check_same_type_1 || !$check_same_type_2 || !$check_same_type_3) {
+                    DB::rollback();
+                    Alert::error('Error', 'Added pokemon type failed, please try again.');
+                    return redirect()->back()->withInput();
+                }
+                $weakness = json_encode($weakness);
+                $type->name = $request->name;
+                $type->weakness = $weakness;
                 $type->save();
                 
                 DB::commit();

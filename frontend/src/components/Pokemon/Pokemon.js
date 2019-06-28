@@ -138,8 +138,12 @@ class Pokemon extends Component {
                         
                         {pokemon.types.map((type, i) => {
                           return (
-                            <Link key={type.id} to={"/types/" + type.id}>
+                            <Link key={type.id} 
+                              to={"/types/" + type.id}
+                              className="type-link">
+                              <Button variant="contained" className={"type__" + type.name}>
                                 {type.name}
+                              </Button>
                             </Link>
                           )
                         })}
