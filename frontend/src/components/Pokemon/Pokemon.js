@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Pokemon.css';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PokemonType from './../PokemonType/PokemonType';
 
 
@@ -95,7 +95,6 @@ class Pokemon extends Component {
     } else {
       loading = '';
     } 
-    console.log(loading)
     return (
       <div>
         { loading }
@@ -136,19 +135,16 @@ class Pokemon extends Component {
                         </Typography>
                       </CardContent>
                       <CardActions>
-                        <Router>
+                        
                         {pokemon.types.map((type, i) => {
                           return (
-                            <div>
-                            <Link key={type.id} to="/types/">
+                            <Link key={type.id} to={"/types/" + type.id}>
                                 {type.name}
                             </Link>
-                            
-                            </div>
                           )
                         })}
                        
-                        </Router>
+                        
                       </CardActions>
                     </Card>
                   </Grid>
