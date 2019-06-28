@@ -10,9 +10,10 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'number', name: 'number'},
+                {data: 'pokemon_number', name: 'pokemon_number'},
                 {data: 'pokemon_avatar', name: 'pokemon_avatar', orderable: false, searchable: false},
                 {data: 'pokemon_name', name: 'pokemon_name'},
+                {data: 'pokemon_type', name: 'pokemon_type'},
             ],
             order: [],
         });

@@ -14,6 +14,21 @@ var Custom = function() {
                 placeholder: $(this).attr('placeholder'),
             });
         });
+
+        $(document).keyup(function(e) {
+            if (e.keyCode == 37) {
+                if ($(".tools .btn-prev").length > 0) {
+                    var url = $(".tools .btn-prev").attr('href');
+                    window.location.href = url;
+                }
+            }
+            if (e.keyCode == 39) {
+                if ($(".tools .btn-next").length > 0) {
+                    var url = $(".tools .btn-next").attr('href');
+                    window.location.href = url;
+                }
+            }
+        });
         
     }
 
