@@ -1,0 +1,54 @@
+.App .title__Grass {
+    color: #11b048;
+}
+.App .title__Fire {
+    color: #fa0807;
+}
+.App .title__Water {
+    color: #159cd7;
+}
+.App .title__Normal {
+    color: #d9dadc;
+}
+.App .title__Electric {
+    color: #fdfd00;
+}
+.App .title__Psychic {
+    color: #ed2d94;
+}
+.App .title__Fighting {
+    color: #dd0605;
+}
+.App .title__Rock {
+    color: #CE8F01;
+}
+.App .title__Ground {
+    color: #fcc000;
+}
+.App .title__Flying {
+    color: #1ab0f4;
+}
+.App .title__Bug {
+    color: #6BD043;
+}
+.App .title__Poison {
+    color: #EC1AD1;
+}
+.App .title__Dark {
+    color: #933703;
+}
+.App .title__Ghost {
+    color: #031A62;
+}
+.App .title__Ice {
+    color: #B2D9F0;
+}
+.App .title__Steel {
+    color: #80807D;
+}
+.App .title__Dragon {
+    color: #7D30A4;
+}
+.App .title__Fairy {
+    color: #FD9CFE;
+}

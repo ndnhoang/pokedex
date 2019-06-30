@@ -15,6 +15,14 @@ img.preview {
   width: 40px;
 }
 
+#list_pokemon_form td img {
+  width: 40px;
+}
+
+#list_statistics td img {
+  width: 40px;
+}
+
 .select2-selection__choice {
   color: #fff !important;
 }
@@ -135,6 +143,9 @@ img.preview {
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
+}
+.nav-tabs {
+  margin-bottom: 10px;
 }
 
 

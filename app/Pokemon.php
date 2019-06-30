@@ -22,6 +22,19 @@ class Pokemon extends Model
         return $this->belongsToMany('App\PokemonType', 'pokemon_pokemon_type', 'pokemon_id', 'type_id');
     }
     
-    
+    public function pokemon()
+    {
+        return $this->belongsTo('App\Pokemon', 'original');
+    }
+
+    public function originals()
+    {
+        return $this->hasMany('App\Pokemon', 'original');
+    }
+
+    public function statistic()
+    {
+        return $this->hasOne('App\Statistic');
+    }
     
 }

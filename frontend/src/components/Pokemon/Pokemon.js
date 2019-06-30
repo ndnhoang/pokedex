@@ -3,7 +3,6 @@ import './Pokemon.css';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from "react-router-dom";
-import PokemonType from './../PokemonType/PokemonType';
 
 
 import PropTypes from 'prop-types';
@@ -111,20 +110,24 @@ class Pokemon extends Component {
                   <Grid item xs={3} key={pokemon.id}>
                     <Card className={classes.card}>
                       <CardActionArea className={classes.imageArea}>
-                        <LazyLoad 
-                          height={200}
-                          width={200}
-                          className="lazy-block"
-                        >
-                          <CardMedia
-                            component="img"
-                            alt={index}
-                            width="100"
-                            image={IMAGE_URL + pokemon.avatar}
-                            title=""
-                            className={classes.media}
-                          />
-                        </LazyLoad>
+                        <Link key={pokemon.id} 
+                          to={"/pokemon/" + pokemon.slug}
+                          className="type-link">
+                          <LazyLoad 
+                            height={200}
+                            width={200}
+                            className="lazy-block"
+                          >
+                            <CardMedia
+                              component="img"
+                              alt={index}
+                              width="100"
+                              image={IMAGE_URL + pokemon.avatar}
+                              title=""
+                              className={classes.media}
+                            />
+                          </LazyLoad>
+                        </Link>
                       </CardActionArea>
                       <CardContent className={classes.content}>
                         <Typography gutterBottom component="h6">
@@ -139,7 +142,7 @@ class Pokemon extends Component {
                         {pokemon.types.map((type, i) => {
                           return (
                             <Link key={type.id} 
-                              to={"/types/" + type.id}
+                              to={"/pokemons/type/" + type.name.toLowerCase()}
                               className="type-link">
                               <Button variant="contained" className={"type__" + type.name}>
                                 {type.name}

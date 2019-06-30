@@ -58,7 +58,7 @@ class PokemonType extends Component {
 
   fetchMoreData = () => {
     const { count } = this.state;
-    const type = this.props.match.params.id;
+    const type = this.props.match.params.name;
     this.setState({start: this.state.start + count});
     const url = `${API_URL}/pokemons/type/${type}/${count}/${this.state.start}`;
     console.log(url)
@@ -79,7 +79,7 @@ class PokemonType extends Component {
 
   componentDidMount() {
     const { count, start } = this.state;
-    const type = this.props.match.params.id;
+    const type = this.props.match.params.name;
     const url = `${API_URL}/pokemons/type/${type}/${count}/${start}`;
     axios.get(url)
       .then(res => res.data)
@@ -91,9 +91,8 @@ class PokemonType extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
-    if(nextProps.match.params.id !== prevState.type){
-      window.scrollTo(0, 0);
-      return { type: nextProps.match.params.id, start: 1, show: 1};
+    if(nextProps.match.params.name !== prevState.type){
+      return { type: nextProps.match.params.name, start: 1, show: 1};
    } 
    else {
       return null;
@@ -101,17 +100,17 @@ class PokemonType extends Component {
  }
  
  componentDidUpdate(prevProps, prevState) {
-   if(prevProps.match.params.id !== this.state.type){
+   if(prevProps.match.params.name !== this.state.type){
     const { count, start } = this.state;
-    const type = this.props.match.params.id;
+    const type = this.props.match.params.name;
     const url = `${API_URL}/pokemons/type/${type}/${count}/${start}`;
-    console.log(url)
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
         this.setState({ pokemons: data })
     });
     this.setState({show : 0, type: type});
+    window.scrollTo(0, 0);
    }
  }
 
@@ -139,20 +138,24 @@ class PokemonType extends Component {
                   <Grid item xs={3} key={pokemon.id}>
                     <Card className={classes.card}>
                       <CardActionArea className={classes.imageArea}>
-                        <LazyLoad 
-                          height={200}
-                          width={200}
-                          className="lazy-block"
-                        >
-                          <CardMedia
-                            component="img"
-                            alt={index}
-                            width="100"
-                            image={IMAGE_URL + pokemon.avatar}
-                            title=""
-                            className={classes.media}
-                          />
-                        </LazyLoad>
+                        <Link key={pokemon.id} 
+                          to={"/pokemon/" + pokemon.slug}
+                          className="type-link">
+                          <LazyLoad 
+                            height={200}
+                            width={200}
+                            className="lazy-block"
+                          >
+                            <CardMedia
+                              component="img"
+                              alt={index}
+                              width="100"
+                              image={IMAGE_URL + pokemon.avatar}
+                              title=""
+                              className={classes.media}
+                            />
+                          </LazyLoad>
+                        </Link>
                       </CardActionArea>
                       <CardContent className={classes.content}>
                         <Typography gutterBottom component="h6">
@@ -167,7 +170,7 @@ class PokemonType extends Component {
                         {pokemon.types.map((type, i) => {
                           return (
                             <Link key={type.id}
-                             to={"/types/" + type.id}
+                             to={"/pokemons/type/" + type.name.toLowerCase()}
                              className="type-link">
                               <Button variant="contained" className={"type__" + type.name}>
                                 {type.name}

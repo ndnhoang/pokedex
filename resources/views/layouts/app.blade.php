@@ -94,6 +94,9 @@
                             <ul>
                                 <li class="nav-item"><a href="{{ route('pokemon.add') }}">Add Pokemon</a></li>
                                 <li class="nav-item"><a href="{{ route('pokemons') }}">List Pokemons</a></li>
+                                <li class="nav-item"><a href="{{ route('pokemon.form.add') }}">Add Pokemon Form</a></li>
+                                <li class="nav-item"><a href="{{ route('pokemon.forms') }}">List Pokemon Forms</a></li>
+                                <li class="nav-item"><a href="{{ route('statistics') }}">List Pokemon Statistics</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">

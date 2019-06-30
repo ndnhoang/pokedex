@@ -17,7 +17,8 @@ class PokemonController extends Controller
      */
     public function index(Request $request, $count, $start)
     {
-        return Pokemon::orderBy('number', 'asc')
+        return Pokemon::whereNull('original')
+            ->orderBy('number', 'asc')
             ->take($count)
             ->skip($start - 1)
             ->get()
@@ -28,11 +29,13 @@ class PokemonController extends Controller
             });
     }
 
-    public function filterPokemonByType(Request $request, $id, $count, $start)
+    public function filterPokemonByType(Request $request, $name, $count, $start)
     {
-        $type = PokemonType::find($id);
+        $name = ucfirst($name);
+        $type = PokemonType::where('name', $name)->first();
         if ($type) {
             return $type->pokemons()
+            ->whereNull('original')
             ->orderBy('number', 'asc')
             ->take($count)
             ->skip($start - 1)
@@ -43,7 +46,96 @@ class PokemonController extends Controller
                 return $pokemon;
             });
         }
-        return false;
+        return null;
+    }
+
+    public function getPokemon(Request $request, $slug) {
+        $pokemon = Pokemon::where('slug', $slug)
+            ->take(1)
+            ->get()
+            ->map(function($pokemon) {
+                $pokemon_prev = Pokemon::where('number', '<', $pokemon->number)
+                                    ->orderBy('number', 'desc')
+                                    ->first();
+                $pokemon_next = Pokemon::where('number', '>', $pokemon->number)
+                                    ->orderBy('number', 'asc')
+                                    ->first();
+                $pokemon_form = Pokemon::where('number', '=', $pokemon->number)
+                                    ->orderBy('id', 'asc')
+                                    ->get();
+                
+                $pokemon->forms = $pokemon_form;
+                $pokemon->next = $pokemon_next;
+                $pokemon->prev = $pokemon_prev;
+                $pokemon->avatar = $pokemon->image->getUrl($pokemon->avatar);
+                $pokemon->types = $pokemon->types;
+                $weakness = $weakness_0 = $weakness_50 = $weakness_200 = [];
+                foreach ($pokemon->types as $type) {
+                    $weakness_type = json_decode($type->weakness);
+                    $weakness_0[] = PokemonType::select('id', 'name')
+                                            ->whereIn('id', $weakness_type->type_0)
+                                            ->get();
+                    $weakness_50[] = PokemonType::select('id', 'name')
+                                            ->whereIn('id', $weakness_type->type_50)
+                                            ->get();
+                    $weakness_200[] = PokemonType::select('id', 'name')
+                                            ->whereIn('id', $weakness_type->type_200)
+                                            ->get();
+                }
+                $weakness_type_0 = [];
+                foreach ($weakness_0 as $value) {
+                    foreach ($value as $item) {
+                        if (!isset($weakness_type_0[$item->id])) {
+                            $weakness_type_0[$item->id] = $item;    
+                        }
+                    }
+                    
+                }
+                $weakness_type_50 = [];
+                foreach ($weakness_50 as $value) {
+                    foreach ($value as $item) {
+                        if (!isset($weakness_type_50[$item->id])) {
+                            $weakness_type_50[$item->id] = $item;    
+                        }
+                    }
+                }
+                $weakness_type_200 = [];
+                foreach ($weakness_200 as $value) {
+                    foreach ($value as $item) {
+                        if (!isset($weakness_type_200[$item->id])) {
+                            $weakness_type_200[$item->id] = $item;    
+                        }
+                    }
+                    
+                }
+                foreach ($weakness_type_50 as $value) {
+                    foreach ($weakness_type_0 as $value_0) {
+                        if ($value_0->id == $value->id) {
+                            unset($weakness_type_0[$value_0->id]);
+                        }
+                    }
+                }
+                foreach ($weakness_type_200 as $value) {
+                    foreach ($weakness_type_0 as $value_0) {
+                        if ($value_0->id == $value->id) {
+                            unset($weakness_type_0[$value_0->id]);
+                        }
+                    }
+                }
+                foreach ($weakness_type_200 as $value) {
+                    foreach ($weakness_type_50 as $value_0) {
+                        if ($value_0->id == $value->id) {
+                            unset($weakness_type_50[$value_0->id]);
+                        }
+                    }
+                }
+                $weakness['type_0'] = $weakness_type_0;
+                $weakness['type_50'] = $weakness_type_50;
+                $weakness['type_200'] = $weakness_type_200;
+                $pokemon->weakness = $weakness;
+                return $pokemon;
+            });
+        return $pokemon;
     }
 
     /**
