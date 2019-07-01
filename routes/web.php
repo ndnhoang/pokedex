@@ -39,7 +39,7 @@ Route::post('/type/delete', 'PokemonTypeController@destroy')->name('type.delete'
 
 // Pokemon Statistic
 Route::get('/statistics', 'StatisticController@index')->name('statistics');
-Route::post('/statistic/edit/{id}', 'PokemonController@updateStatistic')->name('statistic.edit');
+Route::post('/statistic/edit/{id}', 'StatisticController@update')->name('statistic.edit');
 Route::post('/statistic/delete', 'StatisticController@destroy')->name('statistic.delete');
 
 

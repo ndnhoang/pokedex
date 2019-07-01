@@ -8,6 +8,7 @@ use DataTables;
 use DB;
 use Alert;
 use App\Pokemon;
+use Illuminate\Support\Facades\Validator;
 
 class StatisticController extends Controller
 {
@@ -54,6 +55,87 @@ class StatisticController extends Controller
         return view('statistic.list');
     }
 
+    public function update(Request $request, $id)
+    {
+        $pokemon = Pokemon::find($id);
+        if ($pokemon) {
+            $data = $request->all();
+            $rules = [
+                // 'hp' => 'required|integer',
+                // 'attack' => 'required|integer',
+                // 'defense' => 'required|integer',
+                // 'sp_attack' => 'required|integer',
+                // 'sp_defense' => 'required|integer',
+                // 'speed' => 'required|integer',
+            ];
+            $validator = Validator::make($data, $rules);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            DB::beginTransaction();
+            try {
+                $statistic = Statistic::where('pokemon_id', $id)->first();
+
+                $value = $request->hp;
+                $value = explode(',', $value);
+
+                if ($statistic) {
+                    // $statistic->hp = $request->hp;
+                    // $statistic->attack = $request->attack;
+                    // $statistic->defense = $request->defense;
+                    // $statistic->special_attack = $request->sp_attack;
+                    // $statistic->special_defense = $request->sp_defense;
+                    // $statistic->speed = $request->speed;
+                    $statistic->hp = $value[0];
+                    $statistic->attack = $value[1];
+                    $statistic->defense = $value[2];
+                    $statistic->special_attack = $value[3];
+                    $statistic->special_defense = $value[4];
+                    $statistic->speed = $value[5];
+
+                } else {
+                    $statistic = new Statistic;
+                    // $statistic->hp = $request->hp;
+                    // $statistic->attack = $request->attack;
+                    // $statistic->defense = $request->defense;
+                    // $statistic->special_attack = $request->sp_attack;
+                    // $statistic->special_defense = $request->sp_defense;
+                    // $statistic->speed = $request->speed;
+                    $statistic->hp = $value[0];
+                    $statistic->attack = $value[1];
+                    $statistic->defense = $value[2];
+                    $statistic->special_attack = $value[3];
+                    $statistic->special_defense = $value[4];
+                    $statistic->speed = $value[5];
+                    $statistic->pokemon()->associate($pokemon);
+                }
+
+                $statistic->save();
+
+                DB::commit();
+
+                Alert::success('Success', 'You have successfully updated statistic.');
+
+                return redirect()->back();
+
+            } catch (Exception $e) {
+                DB::rollback();
+                Alert::error('Error', 'Updated statistic failed, please try again.');
+                return redirect()->back()->withInput();
+
+            }
+
+        } else {
+
+            Alert::error('Error', 'No pokemon found.');
+
+            return redirect()->route('pokemons');
+
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -63,11 +145,11 @@ class StatisticController extends Controller
     {
         $ids = $request->ids;
         if ($ids == '') {
-            
+
             Alert::warning('Warning', 'You have not selected any pokemon.');
-            
+
             return redirect()->back();
-            
+
         }
         DB::beginTransaction();
         try {
@@ -75,19 +157,19 @@ class StatisticController extends Controller
 
             Statistic::whereIn('id', $ids)->delete();
             DB::commit();
-            
+
             Alert::success('Success', 'You have successfully deleted the pokemon statistic.');
-            
+
             return redirect()->back();
-            
-            
+
+
         } catch (Exception $e) {
             DB::rollback();
-            
+
             Alert::error('Error', 'Deleted pokemon statistic failed, please try again.');
 
             return redirect()->back();
-            
+
         }
     }
 

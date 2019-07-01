@@ -22,6 +22,10 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `pokedex` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `pokedex`;
 
+TRUNCATE TABLE `pokemon_pokemon_type`;
+
+TRUNCATE TABLE `pokemons`;
+
 --
 -- Truncate table before insert `images`
 --
@@ -1048,7 +1052,7 @@ TRUNCATE TABLE `password_resets`;
 -- Truncate table before insert `pokemons`
 --
 
-TRUNCATE TABLE `pokemons`;
+
 --
 -- Dumping data for table `pokemons`
 --
@@ -2014,7 +2018,7 @@ INSERT DELAYED IGNORE INTO `pokemons` (`id`, `number`, `name`, `avatar`, `create
 -- Truncate table before insert `pokemon_pokemon_type`
 --
 
-TRUNCATE TABLE `pokemon_pokemon_type`;
+
 --
 -- Dumping data for table `pokemon_pokemon_type`
 --

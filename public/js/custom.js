@@ -3,7 +3,17 @@ var Custom = function() {
         $(window).keydown(function(event) {
             if ((event.which == 83 && event.ctrlKey)) {
                 event.preventDefault();
-                $('form.custom-form').submit();
+                var editTab = $('#editTab');
+                if (editTab.length > 0) {
+                    $('.nav-link', editTab).each(function() {
+                        if ($(this).hasClass('active')) {
+                            var currentForm = $(this).attr('aria-controls');
+                            $('#' + currentForm + ' form.custom-form').submit();
+                        }
+                    });
+                } else {
+                    $('form.custom-form').submit();
+                }
                 return false;
             } 
             return true;

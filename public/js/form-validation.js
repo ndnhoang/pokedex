@@ -42,7 +42,7 @@ var FormValidation = function() {
 				}
 			},
 
-			invalidHandler: function(event, validator) { //display error alert on form submit  
+			invalidHandler: function(event, validator) { //display error alert on form submit
 				error.addClass('show').removeClass('d-none');
 				error_server.hide();
 				form.addClass('was-validated');
@@ -113,7 +113,7 @@ var FormValidation = function() {
 				}
 			},
 
-			invalidHandler: function(event, validator) { //display error alert on form submit  
+			invalidHandler: function(event, validator) { //display error alert on form submit
 				error.addClass('show').removeClass('d-none');
 				error_server.hide();
 				form.addClass('was-validated');
@@ -174,7 +174,7 @@ var FormValidation = function() {
 			    }
 			},
 
-			invalidHandler: function(event, validator) { //display error alert on form submit  
+			invalidHandler: function(event, validator) { //display error alert on form submit
 				error.html(error_text);
 				error.addClass('show').removeClass('d-none');
 				form.addClass('was-validated');
@@ -235,7 +235,7 @@ var FormValidation = function() {
 			    }
 			},
 
-			invalidHandler: function(event, validator) { //display error alert on form submit  
+			invalidHandler: function(event, validator) { //display error alert on form submit
 				error.html(error_text);
 				error.addClass('show').removeClass('d-none');
 				form.addClass('was-validated');
@@ -312,7 +312,7 @@ var FormValidation = function() {
 				}
 			},
 
-			invalidHandler: function(event, validator) { //display error alert on form submit  
+			invalidHandler: function(event, validator) { //display error alert on form submit
 				error.addClass('show').removeClass('d-none');
 				error_server.hide();
 				form.addClass('was-validated');
@@ -388,7 +388,7 @@ var FormValidation = function() {
 				}
 			},
 
-			invalidHandler: function(event, validator) { //display error alert on form submit  
+			invalidHandler: function(event, validator) { //display error alert on form submit
 				error.addClass('show').removeClass('d-none');
 				error_server.hide();
 				form.addClass('was-validated');
@@ -472,7 +472,7 @@ var FormValidation = function() {
 				}
 			},
 
-			invalidHandler: function(event, validator) { //display error alert on form submit  
+			invalidHandler: function(event, validator) { //display error alert on form submit
 				error.addClass('show').removeClass('d-none');
 				error_server.hide();
 				form.addClass('was-validated');
@@ -510,7 +510,7 @@ var FormValidation = function() {
 			FormEditPokemonType();
 			FormAddPokemonForm();
 			FormEditPokemonForm();
-			FormPokemonStatistic();
+			// FormPokemonStatistic();
 		}
 	};
 }();

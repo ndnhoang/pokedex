@@ -28,13 +28,13 @@
                                 @endif
                             </div>
                             </div>
-        
+
                             <div class="card-body">
                                 <div class="alert alert-danger alert-dismissible fade d-none">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    You have some form errors. Please check below.  
+                                    You have some form errors. Please check below.
                                 </div>
-        
+
                                 @if ($errors->any())
                                     <div class="alert alert-danger alert-server">
                                         <ul>
@@ -44,9 +44,9 @@
                                         </ul>
                                     </div>
                                 @endif
-        
+
                                 @include('layouts.messages')
-        
+
                                 <div class="form-group">
                                     <label for="number">Number <span class="text-danger">*</span></label>
                                     <input type="text" name="number" required id="number" value="{{ old('number') ? old('number') : $pokemon->number }}" class="form-control">
@@ -84,7 +84,7 @@
                                     @endif
                                 </div>
                             </div>
-        
+
                             <div class="card-footer">
                                 <input type="submit" value="Update" class="btn btn-success">
                                 <a href="{{ route('pokemons') }}" class="btn btn-secondary float-right">Return to list</a>
@@ -103,13 +103,13 @@
                             <div class="card-header">
                                 Statistic Pokemon
                             </div>
-        
+
                             <div class="card-body">
                                 <div class="alert alert-danger alert-dismissible fade d-none">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    You have some form errors. Please check below.  
+                                    You have some form errors. Please check below.
                                 </div>
-        
+
                                 @if ($errors->any())
                                     <div class="alert alert-danger alert-server">
                                         <ul>
@@ -119,14 +119,14 @@
                                         </ul>
                                     </div>
                                 @endif
-        
+
                                 @include('layouts.messages')
-        
+
                                 <div class="form-group">
                                     <label for="hp">HP <span class="text-danger">*</span></label>
-                                    <input type="number" name="hp" required id="hp" value="{{ old('hp') ? old('hp') : ($statistic ? $statistic->hp : '') }}" class="form-control">
+                                    <input type="text" name="hp" required id="hp" value="{{ old('hp') ? old('hp') : ($statistic ? $statistic->hp : '') }}" class="form-control">
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="attack">Attack <span class="text-danger">*</span></label>
                                     <input type="number" name="attack" required id="attack" value="{{ old('attack') ? old('attack') : ($statistic ? $statistic->attack : '') }}" class="form-control">
                                 </div>
@@ -145,9 +145,9 @@
                                 <div class="form-group">
                                     <label for="speed">Speed <span class="text-danger">*</span></label>
                                     <input type="number" name="speed" required id="speed" value="{{ old('speed') ? old('speed') : ($statistic ? $statistic->speed : '') }}" class="form-control">
-                                </div>
+                                </div> --}}
                             </div>
-        
+
                             <div class="card-footer">
                                 <input type="submit" value="Update" class="btn btn-success">
                                 <a href="{{ route('statistics') }}" class="btn btn-secondary float-right">Return to list</a>
