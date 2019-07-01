@@ -10,12 +10,12 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'pokemon_number', name: 'pokemon_number'},
+                {data: 'number', name: 'number'},
                 {data: 'pokemon_avatar', name: 'pokemon_avatar', orderable: false, searchable: false},
-                {data: 'pokemon_name', name: 'pokemon_name'},
+                {data: 'name', name: 'name'},
                 {data: 'pokemon_type', name: 'pokemon_type'},
             ],
-            order: [],
+            order: [1, 'asc'],
         });
 
         var checkboxs = $('#checkboxs');
@@ -64,9 +64,9 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'type', name: 'type'},
+                {data: 'name', name: 'name'},
             ],
-            order: [],
+            order: [1, 'asc'],
         });
 
         var checkboxs = $('#checkboxs');
@@ -115,13 +115,13 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'pokemon_number', name: 'pokemon_number'},
+                {data: 'number', name: 'number'},
                 {data: 'pokemon_avatar', name: 'pokemon_avatar', orderable: false, searchable: false},
-                {data: 'pokemon_name', name: 'pokemon_name'},
+                {data: 'name', name: 'name'},
                 {data: 'pokemon_type', name: 'pokemon_type'},
                 {data: 'pokemon_original', name: 'pokemon_original'},
             ],
-            order: [],
+            order: [1, 'asc'],
         });
 
         var checkboxs = $('#checkboxs');
@@ -170,16 +170,18 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
+                {data: 'number', name: 'number'},
                 {data: 'pokemon_avatar', name: 'pokemon_avatar', orderable: false, searchable: false},
-                {data: 'pokemon_name', name: 'pokemon_name'},
+                {data: 'name', name: 'name'},
                 {data: 'hp', name: 'hp'},
                 {data: 'attack', name: 'attack'},
                 {data: 'defense', name: 'defense'},
                 {data: 'special_attack', name: 'special_attack'},
                 {data: 'special_defense', name: 'special_defense'},
                 {data: 'speed', name: 'speed'},
+                {data: 'total', name: 'total'},
             ],
-            order: [],
+            order: [1, 'asc'],
         });
 
         var checkboxs = $('#checkboxs');

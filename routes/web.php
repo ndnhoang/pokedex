@@ -35,6 +35,7 @@ Route::get('/type/add', 'PokemonTypeController@create')->name('type.add');
 Route::post('/type/add', 'PokemonTypeController@store')->name('type.add');
 Route::get('/type/edit/{id}', 'PokemonTypeController@edit')->name('type.edit');
 Route::post('/type/edit/{id}', 'PokemonTypeController@update')->name('type.edit');
+Route::post('/type/delete', 'PokemonTypeController@destroy')->name('type.delete');
 
 // Pokemon Statistic
 Route::get('/statistics', 'StatisticController@index')->name('statistics');

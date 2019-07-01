@@ -19,15 +19,16 @@ class PokemonTypeController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $types = PokemonType::orderBy('id', 'asc')->get();
+            $types = PokemonType::query();
             return DataTables::of($types)
                 ->addColumn('checkbox', function ($type) {
                     return '<div class="custom-control custom-checkbox"><input type="checkbox" value="'.$type->id.'" id="check-'.$type->name.'" class="custom-control-input"><label class="custom-control-label" for="check-'.$type->name.'"></label></div>';
                 })
-                ->addColumn('type', function ($type) {
+                ->addColumn('name', function ($type) {
                     return '<a href="'.route('type.edit', ['id' => $type->id]).'">'.$type->name.'</a>';
                 })
-                ->rawColumns(['checkbox', 'type'])
+                ->rawColumns(['checkbox', 'name'])
+                ->orderColumn('name', 'name $1')
                 ->make(true);
         }
         return view('pokemon-type.list');
@@ -309,8 +310,35 @@ class PokemonTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $ids = $request->ids;
+        if ($ids == '') {
+            
+            Alert::warning('Warning', 'You have not selected any pokemon type.');
+            
+            return redirect()->back();
+            
+        }
+        DB::beginTransaction();
+        try {
+            $ids = explode(',', $ids);
+
+            PokemonType::whereIn('id', $ids)->delete();
+            DB::commit();
+            
+            Alert::success('Success', 'You have successfully deleted the pokemon type.');
+            
+            return redirect()->back();
+            
+            
+        } catch (Exception $e) {
+            DB::rollback();
+            
+            Alert::error('Error', 'Deleted pokemon type failed, please try again.');
+
+            return redirect()->back();
+            
+        }
     }
 }

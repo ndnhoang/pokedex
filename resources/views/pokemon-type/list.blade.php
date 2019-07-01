@@ -10,7 +10,7 @@
                     List Pokemon Type
                     <div class="tools float-right">
                         <a class="btn btn-primary btn-sm" href="{{ route('type.add') }}">Add</a>
-                        <form class="form-inline d-inline-flex" action="" method="post" id="remove_pokemon_type_form">
+                        <form class="form-inline d-inline-flex" action="{{ route('type.delete') }}" method="post" id="remove_pokemon_type_form">
                             @csrf
                             <input type="hidden" name="ids" value="">
                             <button class="btn btn-secondary btn-sm" type="submit" id="remove_pokemon_type_btn">Remove</button>

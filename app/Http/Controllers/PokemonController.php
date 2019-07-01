@@ -23,20 +23,18 @@ class PokemonController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $pokemons = Pokemon::whereNull('original')
-                ->orderBy('number', 'asc')
-                ->get();
+            $pokemons = Pokemon::whereNull('original');
             return DataTables::of($pokemons)
                 ->addColumn('checkbox', function ($pokemon) {
                     return '<div class="custom-control custom-checkbox"><input type="checkbox" value="'.$pokemon->id.'" id="check-'.$pokemon->number.'" class="custom-control-input"><label class="custom-control-label" for="check-'.$pokemon->number.'"></label></div>';
                 })
-                ->addColumn('pokemon_number', function($pokemon) {
+                ->addColumn('number', function($pokemon) {
                     return '<a href="'.route('pokemon.edit', ['id' => $pokemon->id]).'">#'.$pokemon->number.'</a>';
                 })
                 ->addColumn('pokemon_avatar', function ($pokemon) {
                     return '<img src="'.$pokemon->image->getUrl($pokemon->avatar).'" alt="'.$pokemon->name.'" />';
                 })
-                ->addColumn('pokemon_name', function ($pokemon) {
+                ->addColumn('name', function ($pokemon) {
                     return '<a href="'.route('pokemon.edit', ['id' => $pokemon->id]).'">'.$pokemon->name.'</a>';
                 })
                 ->addColumn('pokemon_type', function($pokemon) {
@@ -48,7 +46,8 @@ class PokemonController extends Controller
                     }
                     return $type_text;
                 })
-                ->rawColumns(['checkbox', 'pokemon_number', 'pokemon_avatar', 'pokemon_name', 'pokemon_type'])
+                ->rawColumns(['checkbox', 'number', 'pokemon_avatar', 'name', 'pokemon_type'])
+                ->orderColumns(['number', 'name'], ':column $1')
                 ->make(true);
         }
         return view('pokemon.list');
@@ -62,21 +61,19 @@ class PokemonController extends Controller
     public function indexForm(Request $request)
     {
         if ($request->ajax()) {
-            $pokemons = Pokemon::whereNotNull('original')
-                ->orderBy('number', 'asc')
-                ->get();
+            $pokemons = Pokemon::whereNotNull('original');
             return DataTables::of($pokemons)
                 ->addColumn('checkbox', function ($pokemon) {
                     return '<div class="custom-control custom-checkbox"><input type="checkbox" value="'.$pokemon->id.'" id="check-'.$pokemon->id.'" class="custom-control-input"><label class="custom-control-label" for="check-'.$pokemon->id.'"></label></div>';
                 })
-                ->addColumn('pokemon_number', function($pokemon) {
+                ->addColumn('number', function($pokemon) {
                     $original_pokemon = Pokemon::find($pokemon->original);
                     return '#'.$original_pokemon->number;
                 })
                 ->addColumn('pokemon_avatar', function ($pokemon) {
                     return '<img src="'.$pokemon->image->getUrl($pokemon->avatar).'" alt="'.$pokemon->name.'" />';
                 })
-                ->addColumn('pokemon_name', function ($pokemon) {
+                ->addColumn('name', function ($pokemon) {
                     return '<a href="'.route('pokemon.form.edit', ['id' => $pokemon->id]).'">'.$pokemon->name.'</a>';
                 })
                 ->addColumn('pokemon_type', function($pokemon) {
@@ -92,7 +89,8 @@ class PokemonController extends Controller
                     $original_pokemon = Pokemon::find($pokemon->original);
                     return $original_pokemon->name;
                 })
-                ->rawColumns(['checkbox', 'pokemon_number', 'pokemon_avatar', 'pokemon_name', 'pokemon_type', 'pokemon_original'])
+                ->rawColumns(['checkbox', 'number', 'pokemon_avatar', 'name', 'pokemon_type', 'pokemon_original'])
+                ->orderColumns(['number', 'name'], ':column $1')
                 ->make(true);
         }
         return view('pokemon.list-form');
@@ -268,8 +266,16 @@ class PokemonController extends Controller
                 $pokemon_type[] = $type->id;
             }
             $types = PokemonType::all();
-            $pokemon_prev = Pokemon::where('number', '<', $pokemon->number)->max('id');
-            $pokemon_next = Pokemon::where('number', '>', $pokemon->number)->min('id');
+            $pokemon_prev = Pokemon::where('number', '<', $pokemon->number)
+                            ->whereNull('original')
+                            ->orderBy('number', 'desc')
+                            ->first();
+            $pokemon_prev = $pokemon_prev ? $pokemon_prev->id : null;
+            $pokemon_next = Pokemon::where('number', '>', $pokemon->number)
+                            ->whereNull('original')
+                            ->orderBy('number', 'asc')
+                            ->first();
+            $pokemon_next = $pokemon_next ? $pokemon_next->id : null;
             $statistic = Statistic::where('pokemon_id', $id)->first();
             return view('pokemon.edit', compact(['pokemon', 'types', 'pokemon_type', 'pokemon_prev', 'pokemon_next', 'statistic']));
         } else {
@@ -301,26 +307,46 @@ class PokemonController extends Controller
                 $pokemon_type[] = $type->id;
             }
             $types = PokemonType::all();
-            $pokemon_prev = Pokemon::where('number', '<=', $pokemon->number)
+            $pokemon_prev = Pokemon::where('number', '=', $pokemon->number)
                 ->where('id', '<', $id)
                 ->whereNotNull('original')
                 ->orderBy('number', 'desc')
                 ->orderBy('id', 'desc')
                 ->first();
+            if (!$pokemon_prev) {
+                $pokemon_prev = Pokemon::where('number', '<', $pokemon->number)
+                    ->whereNotNull('original')
+                    ->orderBy('number', 'desc')
+                    ->orderBy('id', 'desc')
+                    ->first();
+            }
             if ($pokemon_prev) {
                 $pokemon_prev = $pokemon_prev->id;
+            } else {
+                $pokemon_prev = null;
             }
-            $pokemon_next = Pokemon::where('number', '>=', $pokemon->number)
-                ->where('id', '>', $id)
+            $pokemon_next = Pokemon::where('number', '=', $pokemon->number)
                 ->whereNotNull('original')
+                ->where('id', '>', $id)
                 ->orderBy('number', 'asc')
                 ->orderBy('id', 'asc')
                 ->first();
+            if (!$pokemon_next) {
+                $pokemon_next = Pokemon::where('number', '>', $pokemon->number)
+                    ->whereNotNull('original')
+                    ->orderBy('number', 'asc')
+                    ->orderBy('id', 'asc')
+                    ->first();
+            }
             if ($pokemon_next) {
                 $pokemon_next = $pokemon_next->id;
+            } else {
+                $pokemon_next = null;
             }
 
-            return view('pokemon.edit-form', compact(['pokemon', 'pokemons', 'types', 'pokemon_type', 'pokemon_prev', 'pokemon_next']));
+            $statistic = Statistic::where('pokemon_id', $id)->first();
+
+            return view('pokemon.edit-form', compact(['pokemon', 'pokemons', 'types', 'pokemon_type', 'pokemon_prev', 'pokemon_next', 'statistic']));
         } else {
             
             Alert::error('Error', 'No pokemon form found.');

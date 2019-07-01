@@ -29,6 +29,7 @@
                                         <label class="custom-control-label" for="checkboxs"</label>
                                     </div>
                                 </th>
+                                <th>No.</th>
                                 <th>Avatar</th>
                                 <th>Name</th>
                                 <th>HP</th>
@@ -37,6 +38,7 @@
                                 <th>Sp. Attack</th>
                                 <th>Sp. Defense</th>
                                 <th>Speed</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
