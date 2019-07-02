@@ -24,3 +24,6 @@ Route::get('/pokemon/{slug}', 'API\PokemonController@getPokemon')->name('api.pok
 // Pokemon Type
 Route::get('/types', 'API\PokemonTypeController@index')->name('api.types');
 Route::get('/type/{name}', 'API\PokemonTypeController@getType')->name('api.type');
+
+// Pokemon Statistic
+Route::get('/pokemon/statistic/{slug}', 'API\PokemonController@getStatistic')->name('api.pokemon.statistic');

@@ -91,6 +91,7 @@ class PokemonDetail extends Component {
       pokemon: null,
       slug: null,
       form: 0,
+      statistic: null,
     };
     this.getPokemon = this.getPokemon.bind(this);
   }
@@ -107,23 +108,32 @@ class PokemonDetail extends Component {
   componentDidMount() {
     const slug = this.props.match.params.slug;
     const url = `${API_URL}/pokemon/${slug}`;
+    const url_statistic = `${API_URL}/pokemon/statistic/${slug}`;
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
         this.setState({ pokemon: data, form: data[0].slug })
     });
+
+    // get statistic
+    axios.get(url_statistic)
+        .then(res => res.data)
+        .then((data) => {
+        this.setState({ statistic: data })
+    });
+
     this.setState({show : 0, slug: slug});
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
     if(nextProps.match.params.slug !== prevState.slug){
       return { slug: nextProps.match.params.slug, show: 1};
-   } 
+   }
    else {
       return null;
    }
  }
- 
+
  componentDidUpdate(prevProps, prevState) {
    if(prevProps.match.params.slug !== this.state.slug)  {
     const slug = this.props.match.params.slug;
@@ -152,10 +162,10 @@ class PokemonDetail extends Component {
       loading = <Loading />;
     } else {
       loading = '';
-    } 
+    }
     let pokemon = this.state.pokemon;
     let weakness_0, weakness_50, weakness_200;
-    
+
     if (pokemon && pokemon.length > 0 && pokemon[0].weakness) {
         weakness_0 = pokemon[0].weakness.type_0;
         weakness_50 = pokemon[0].weakness.type_50;
@@ -212,7 +222,7 @@ class PokemonDetail extends Component {
                   </Grid>
                   <Grid item xs={6} className={classes.avatar}>
                     <CardActionArea className={classes.imageArea}>
-                      <LazyLoad 
+                      <LazyLoad
                         className="lazy-block"
                       >
                         <CardMedia

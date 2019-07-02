@@ -63,7 +63,7 @@ class PokemonController extends Controller
                 $pokemon_form = Pokemon::where('number', '=', $pokemon->number)
                                     ->orderBy('id', 'asc')
                                     ->get();
-                
+
                 $pokemon->forms = $pokemon_form;
                 $pokemon->next = $pokemon_next;
                 $pokemon->prev = $pokemon_prev;
@@ -86,16 +86,16 @@ class PokemonController extends Controller
                 foreach ($weakness_0 as $value) {
                     foreach ($value as $item) {
                         if (!isset($weakness_type_0[$item->id])) {
-                            $weakness_type_0[$item->id] = $item;    
+                            $weakness_type_0[$item->id] = $item;
                         }
                     }
-                    
+
                 }
                 $weakness_type_50 = [];
                 foreach ($weakness_50 as $value) {
                     foreach ($value as $item) {
                         if (!isset($weakness_type_50[$item->id])) {
-                            $weakness_type_50[$item->id] = $item;    
+                            $weakness_type_50[$item->id] = $item;
                         }
                     }
                 }
@@ -103,10 +103,10 @@ class PokemonController extends Controller
                 foreach ($weakness_200 as $value) {
                     foreach ($value as $item) {
                         if (!isset($weakness_type_200[$item->id])) {
-                            $weakness_type_200[$item->id] = $item;    
+                            $weakness_type_200[$item->id] = $item;
                         }
                     }
-                    
+
                 }
                 foreach ($weakness_type_50 as $value) {
                     foreach ($weakness_type_0 as $value_0) {
@@ -139,6 +139,22 @@ class PokemonController extends Controller
     }
 
     /**
+     * Get pokemon statistic
+     *
+     * @param string $slug
+     *
+     */
+    public function getStatistic(Request $request, $slug)
+    {
+        $pokemon = Pokemon::where('slug', $slug)->first();
+        if ($pokemon) {
+            $statistic = $pokemon->statistic;
+            return $statistic;
+        }
+        return null;
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -167,7 +183,7 @@ class PokemonController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         if ($request->hasFile('avatar')) {
             DB::beginTransaction();
             try {
@@ -188,19 +204,19 @@ class PokemonController extends Controller
                 $avatar->value = $pokemon->id;
                 $avatar->save();
                 DB::commit();
-                
+
                 Alert::success('Success', 'You have successfully added the pokemon.');
-                
+
                 return redirect()->back();
-                
+
             } catch (Exception $e) {
                 DB::rollback();
                 Alert::error('Error', 'Added pokemon failed, please try again.');
                 return redirect()->back()->withInput();
-                
+
             }
         }
-        
+
     }
 
     /**
@@ -226,11 +242,11 @@ class PokemonController extends Controller
         if ($pokemon) {
             return view('pokemon.edit', compact(['pokemon']));
         } else {
-            
+
             Alert::error('Error', 'No pokemon found.');
-            
+
             return redirect()->back();
-            
+
         }
     }
 
@@ -256,7 +272,7 @@ class PokemonController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-           
+
             DB::beginTransaction();
             try {
                 $avatar = Image::find($pokemon->avatar);
@@ -275,36 +291,36 @@ class PokemonController extends Controller
                         $avatar->table = 'pokemons';
                         $avatar->meta = 'avatar';
                     }
-    
+
                     $avatar->save();
                     $pokemon->avatar = $avatar->id;
                 }
-                
+
                 $pokemon->save();
                 if ($request->hasFile('avatar')) {
                     $avatar->value = $pokemon->id;
                     $avatar->save();
                 }
-                
+
                 DB::commit();
-                
+
                 Alert::success('Success', 'You have successfully updated the pokemon.');
-                
+
                 return redirect()->back();
-                
+
             } catch (Exception $e) {
                 DB::rollback();
                 Alert::error('Error', 'Updated pokemon failed, please try again.');
                 return redirect()->back()->withInput();
-                
+
             }
-            
+
         } else {
-            
+
             Alert::error('Error', 'No pokemon found.');
-            
+
             return redirect()->route('pokemons');
-            
+
         }
     }
 
@@ -317,30 +333,30 @@ class PokemonController extends Controller
     {
         $ids = $request->ids;
         if ($ids == '') {
-            
+
             Alert::warning('Warning', 'You have not selected any pokemon.');
-            
+
             return redirect()->back();
-            
+
         }
         DB::beginTransaction();
         try {
             $ids = explode(',', $ids);
             Pokemon::whereIn('id', $ids)->delete();
             DB::commit();
-            
+
             Alert::success('Success', 'You have successfully deleted the pokemon.');
-            
+
             return redirect()->back();
-            
-            
+
+
         } catch (Exception $e) {
             DB::rollback();
-            
+
             Alert::error('Error', 'Deleted pokemon failed, please try again.');
 
             return redirect()->back();
-            
+
         }
     }
 }
