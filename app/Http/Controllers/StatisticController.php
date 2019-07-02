@@ -23,34 +23,49 @@ class StatisticController extends Controller
             $statistics = Statistic::join('pokemons', 'statistics.pokemon_id', '=', 'pokemons.id')
                             ->select('statistics.*', 'number', 'name', 'avatar', DB::raw('SUM(hp + attack + defense + special_attack + special_defense + speed) as total'))
                             ->groupBy('id');
-            return DataTables::of($statistics)
-                ->addColumn('checkbox', function ($statistic) {
-                    return '<div class="custom-control custom-checkbox"><input type="checkbox" value="'.$statistic->id.'" id="check-'.$statistic->id.'" class="custom-control-input"><label class="custom-control-label" for="check-'.$statistic->id.'"></label></div>';
-                })
-                ->addColumn('number', function($statistic) {
-                    if ($statistic->pokemon->original == null) {
-                        return '<a href="'.route('pokemon.edit', ['id' => $statistic->pokemon_id]).'#statistic">#'.$statistic->pokemon->number.'</a>';
-                    } else {
-                        return '<a href="'.route('pokemon.form.edit', ['id' => $statistic->pokemon_id]).'#statistic">#'.$statistic->pokemon->number.'</a>';
-                    }
-                })
-                ->addColumn('pokemon_avatar', function ($statistic) {
-                    $pokemon = $statistic->pokemon;
-                    return '<img src="'.$pokemon->image->getUrl($pokemon->avatar).'" alt="'.$pokemon->name.'" />';
-                })
-                ->addColumn('name', function($statistic) {
-                    if ($statistic->pokemon->original == null) {
-                        return '<a href="'.route('pokemon.edit', ['id' => $statistic->pokemon_id]).'#statistic">'.$statistic->pokemon->name.'</a>';
-                    } else {
-                        return '<a href="'.route('pokemon.form.edit', ['id' => $statistic->pokemon_id]).'#statistic">'.$statistic->pokemon->name.'</a>';
-                    }
-                })
-                ->addColumn('total', function($statistic) {
-                    return '<strong>'.$statistic->total.'</strong>';
-                })
-                ->rawColumns(['checkbox', 'number', 'pokemon_avatar', 'name', 'total'])
-                ->orderColumns(['number', 'name', 'total'], ':column $1')
-                ->make(true);
+
+            $datatables = DataTables::of($statistics)
+            ->addColumn('checkbox', function ($statistic) {
+                return '<div class="custom-control custom-checkbox"><input type="checkbox" value="'.$statistic->id.'" id="check-'.$statistic->id.'" class="custom-control-input"><label class="custom-control-label" for="check-'.$statistic->id.'"></label></div>';
+            })
+            ->addColumn('number', function($statistic) {
+                if ($statistic->pokemon->original == null) {
+                    return '<a href="'.route('pokemon.edit', ['id' => $statistic->pokemon_id]).'#statistic">#'.$statistic->pokemon->number.'</a>';
+                } else {
+                    return '<a href="'.route('pokemon.form.edit', ['id' => $statistic->pokemon_id]).'#statistic">#'.$statistic->pokemon->number.'</a>';
+                }
+            })
+            ->addColumn('pokemon_avatar', function ($statistic) {
+                $pokemon = $statistic->pokemon;
+                return '<img src="'.$pokemon->image->getUrl($pokemon->avatar).'" alt="'.$pokemon->name.'" />';
+            })
+            ->addColumn('name', function($statistic) {
+                if ($statistic->pokemon->original == null) {
+                    return '<a href="'.route('pokemon.edit', ['id' => $statistic->pokemon_id]).'#statistic">'.$statistic->pokemon->name.'</a>';
+                } else {
+                    return '<a href="'.route('pokemon.form.edit', ['id' => $statistic->pokemon_id]).'#statistic">'.$statistic->pokemon->name.'</a>';
+                }
+            })
+            ->addColumn('total', function($statistic) {
+                return '<strong>'.$statistic->total.'</strong>';
+            })
+            ->rawColumns(['checkbox', 'number', 'pokemon_avatar', 'name', 'total'])
+            ->orderColumns(['number', 'name', 'total'], ':column $1');
+
+            $search = $request->search['value'];
+            if ($search) {
+                $statistics->having('number','like', '%'.$search.'%');
+                $statistics->orHaving('name','like', '%'.$search.'%');
+                $statistics->orHaving('hp','like', '%'.$search.'%');
+                $statistics->orHaving('attack','like', '%'.$search.'%');
+                $statistics->orHaving('defense','like', '%'.$search.'%');
+                $statistics->orHaving('special_attack','like', '%'.$search.'%');
+                $statistics->orHaving('special_defense','like', '%'.$search.'%');
+                $statistics->orHaving('speed','like', '%'.$search.'%');
+                $statistics->orHaving('total','like', '%'.$search.'%');
+            }
+
+            return $datatables->make(true);
         }
         return view('statistic.list');
     }

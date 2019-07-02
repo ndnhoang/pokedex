@@ -10,12 +10,25 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'number', name: 'number'},
+                {data: 'number', name: 'pokemons.number'},
                 {data: 'pokemon_avatar', name: 'pokemon_avatar', orderable: false, searchable: false},
-                {data: 'name', name: 'name'},
+                {data: 'name', name: 'pokemons.name'},
                 {data: 'pokemon_type', name: 'pokemon_type'},
             ],
             order: [1, 'asc'],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var input = document.createElement("input");
+                    $(input).appendTo($(column.footer()).empty())
+                    .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                        column.search(val ? val : '', true, false).draw();
+                        console.log(val);
+                    });
+                });
+            }
         });
 
         var checkboxs = $('#checkboxs');
@@ -64,7 +77,7 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'name', name: 'name'},
+                {data: 'name', name: 'pokemon_types.name'},
             ],
             order: [1, 'asc'],
         });
@@ -115,9 +128,9 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'number', name: 'number'},
+                {data: 'number', name: 'pokemons.number'},
                 {data: 'pokemon_avatar', name: 'pokemon_avatar', orderable: false, searchable: false},
-                {data: 'name', name: 'name'},
+                {data: 'name', name: 'pokemons.name'},
                 {data: 'pokemon_type', name: 'pokemon_type'},
                 {data: 'pokemon_original', name: 'pokemon_original'},
             ],
@@ -170,16 +183,16 @@ var ListDataTable = function() {
             ajax: url,
             columns: [
                 {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-                {data: 'number', name: 'number'},
+                {data: 'number', name: 'pokemons.number', orderable: false, searchable: false},
                 {data: 'pokemon_avatar', name: 'pokemon_avatar', orderable: false, searchable: false},
-                {data: 'name', name: 'name'},
-                {data: 'hp', name: 'hp'},
-                {data: 'attack', name: 'attack'},
-                {data: 'defense', name: 'defense'},
-                {data: 'special_attack', name: 'special_attack'},
-                {data: 'special_defense', name: 'special_defense'},
-                {data: 'speed', name: 'speed'},
-                {data: 'total', name: 'total'},
+                {data: 'name', name: 'pokemons.name', orderable: false, searchable: false},
+                {data: 'hp', name: 'statistics.hp', orderable: false, searchable: false},
+                {data: 'attack', name: 'statistics.attack', orderable: false, searchable: false},
+                {data: 'defense', name: 'statistics.defense', orderable: false, searchable: false},
+                {data: 'special_attack', name: 'statistics.special_attack', orderable: false, searchable: false},
+                {data: 'special_defense', name: 'statistics.special_defense', orderable: false, searchable: false},
+                {data: 'speed', name: 'statistics.speed', orderable: false, searchable: false},
+                {data: 'total', name: 'total', orderable: false, searchable: false},
             ],
             order: [1, 'asc'],
         });
