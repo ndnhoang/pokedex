@@ -20,7 +20,7 @@ import Button from '@material-ui/core/Button';
 
 const styles = {
   card: {
-    
+
   },
   media: {
     width: 200,
@@ -75,7 +75,7 @@ class PokemonType extends Component {
   // shouldComponentUpdate(){}
   // componentWillUpdate(){}
   // componentDidUpdate(){}
-  
+
 
   componentDidMount() {
     const { count, start } = this.state;
@@ -84,21 +84,19 @@ class PokemonType extends Component {
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
-        this.setState({ pokemons: data })
+        this.setState({ pokemons: data, show : 0, type: type })
     });
-    this.setState({show : 0, type: type});
-    
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
     if(nextProps.match.params.name !== prevState.type){
       return { type: nextProps.match.params.name, start: 1, show: 1};
-   } 
+   }
    else {
       return null;
    }
  }
- 
+
  componentDidUpdate(prevProps, prevState) {
    if(prevProps.match.params.name !== this.state.type){
     const { count, start } = this.state;
@@ -107,9 +105,8 @@ class PokemonType extends Component {
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
-        this.setState({ pokemons: data })
+        this.setState({ pokemons: data, show : 0, type: type })
     });
-    this.setState({show : 0, type: type});
     window.scrollTo(0, 0);
    }
  }
@@ -121,7 +118,7 @@ class PokemonType extends Component {
       loading = <Loading />;
     } else {
       loading = '';
-    } 
+    }
     return (
       <div>
         { loading }
@@ -138,10 +135,10 @@ class PokemonType extends Component {
                   <Grid item xs={3} key={pokemon.id}>
                     <Card className={classes.card}>
                       <CardActionArea className={classes.imageArea}>
-                        <Link key={pokemon.id} 
+                        <Link key={pokemon.id}
                           to={"/pokemon/" + pokemon.slug}
                           className="type-link">
-                          <LazyLoad 
+                          <LazyLoad
                             height={200}
                             width={200}
                             className="lazy-block"
@@ -166,7 +163,7 @@ class PokemonType extends Component {
                         </Typography>
                       </CardContent>
                       <CardActions>
-                        
+
                         {pokemon.types.map((type, i) => {
                           return (
                             <Link key={type.id}
@@ -178,14 +175,14 @@ class PokemonType extends Component {
                             </Link>
                           )
                         })}
-                       
-                        
+
+
                       </CardActions>
                     </Card>
                   </Grid>
               ))}
             </Grid>
-          </Container>  
+          </Container>
         </InfiniteScroll>
       </div>
     );

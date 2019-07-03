@@ -99,3 +99,14 @@
 .type-link {
     text-decoration: none;
 }
+.total-block {
+    text-align: left;
+    position: relative;
+    top: -25px;
+    padding-left: 87px;
+}
+.total-block .total-statistic {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fa0807;
+}

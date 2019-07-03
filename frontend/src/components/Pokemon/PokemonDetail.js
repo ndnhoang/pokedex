@@ -100,7 +100,7 @@ class PokemonDetail extends Component {
       options: {
         chart: {
             id: "basic-bar",
-            height: 400,
+            height: 300,
         },
         xaxis: {
             categories: ['HP', 'Attack', 'Defense', 'Sp. Attack', 'Sp. Defense', 'Speed'],
@@ -144,6 +144,7 @@ class PokemonDetail extends Component {
             data: [0, 0, 0, 0, 0, 0],
         }
       ],
+      total: 0,
     };
     this.getPokemon = this.getPokemon.bind(this);
   }
@@ -164,7 +165,7 @@ class PokemonDetail extends Component {
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
-        this.setState({ pokemon: data, form: data[0].slug })
+        this.setState({ pokemon: data, form: data[0].slug, show : 0, slug: slug })
     });
     // get statistic
     axios.get(url_statistic)
@@ -173,7 +174,7 @@ class PokemonDetail extends Component {
         this.setState({ statistic: data })
         if (this.state.statistic) {
             const statistic = this.state.statistic;
-
+            const total = statistic.hp + statistic.attack + statistic.defense + statistic.special_attack + statistic.special_defense + statistic.speed;
             this.setState({
                 series: [
                     {
@@ -181,12 +182,10 @@ class PokemonDetail extends Component {
                         data: [statistic.hp, statistic.attack, statistic.defense, statistic.special_attack, statistic.special_defense, statistic.speed]
                     },
                 ],
+                total: total,
             });
         }
     });
-
-    this.setState({show : 0, slug: slug});
-
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
@@ -207,7 +206,7 @@ class PokemonDetail extends Component {
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
-        this.setState({ pokemon: data, form: data[0].slug })
+        this.setState({ pokemon: data, form: data[0].slug, show : 0, slug: slug })
     });
 
     // get statistic
@@ -217,7 +216,7 @@ class PokemonDetail extends Component {
         this.setState({ statistic: data })
         if (this.state.statistic) {
             const statistic = this.state.statistic;
-
+            const total = statistic.hp + statistic.attack + statistic.defense + statistic.special_attack + statistic.special_defense + statistic.speed;
             this.setState({
                 series: [
                     {
@@ -225,11 +224,10 @@ class PokemonDetail extends Component {
                         data: [statistic.hp, statistic.attack, statistic.defense, statistic.special_attack, statistic.special_defense, statistic.speed]
                     },
                 ],
+                total: total,
             });
         }
     });
-
-    this.setState({show : 0, slug: slug});
     window.scrollTo(0, 0);
    }
  }
@@ -401,13 +399,17 @@ class PokemonDetail extends Component {
                   <Grid item xs={6} className={classes.mixed_chart}>
                     <Typography variant="h6" gutterBottom>
                         Statistics
-                      </Typography>
+                    </Typography>
                     <Chart
                         options={this.state.options}
                         series={this.state.series}
                         type="bar"
                         width="500"
                     />
+                    <div className="total-block">
+                        <strong>Total: </strong>
+                        <span className="total-statistic">{ this.state.total }</span>
+                    </div>
                   </Grid>
                 </Grid>
               ))}

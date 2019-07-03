@@ -61,10 +61,8 @@ class Type extends Component {
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
-        this.setState({ types: data })
+        this.setState({ types: data, show : 0 })
     });
-    this.setState({show : 0});
-
   }
 
   render() {
@@ -74,13 +72,13 @@ class Type extends Component {
       loading = <Loading />;
     } else {
       loading = '';
-    } 
+    }
     return (
       <div>
-        { loading }
         <Container maxWidth="lg">
             <Grid container spacing={3}>
                 <Grid item xs={3} className={classes.sidebar}>
+                    { loading }
                     {this.state.types.map((type, index) => (
                         <Grid item xs={12} key={type.id} className={classes.typeRow}>
                             <Link to={"/type/" + type.name.toLowerCase()}
@@ -94,7 +92,7 @@ class Type extends Component {
                     ))}
                 </Grid>
                 <Grid item xs={9}>
-                <LazyLoad 
+                <LazyLoad
                     className="lazy-block"
                 >
                     <CardMedia
@@ -104,7 +102,7 @@ class Type extends Component {
                         title=""
                         className={classes.media}
                     />
-                </LazyLoad> 
+                </LazyLoad>
                 </Grid>
             </Grid>
         </Container>

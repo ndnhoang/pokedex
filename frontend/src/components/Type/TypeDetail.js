@@ -63,21 +63,19 @@ class TypeDetail extends Component {
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
-        this.setState({ type: data })
+        this.setState({ type: data, show : 0 })
     });
-    this.setState({show : 0});
-
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
     if(nextProps.match.params.name !== prevState.type_name){
       return { type_name: nextProps.match.params.name, show: 1};
-   } 
+   }
    else {
       return null;
    }
  }
- 
+
  componentDidUpdate(prevProps, prevState) {
    if(prevProps.match.params.name !== this.state.type_name)  {
     const type_name = this.props.match.params.name;
@@ -85,9 +83,8 @@ class TypeDetail extends Component {
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
-        this.setState({ type: data })
+        this.setState({ type: data, show : 0, type_name: type_name })
     });
-    this.setState({show : 0, type_name: type_name});
     window.scrollTo(0, 0);
    }
  }
@@ -99,7 +96,7 @@ class TypeDetail extends Component {
       loading = <Loading />;
     } else {
       loading = '';
-    } 
+    }
     const type = this.state.type;
     let weakness_0, weakness_50, weakness_200;
     if (type) {

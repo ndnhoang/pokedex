@@ -21,7 +21,7 @@ import LazyLoad from 'react-lazy-load';
 
 const styles = {
   card: {
-    
+
   },
   media: {
     width: 200,
@@ -80,10 +80,8 @@ class Pokemon extends Component {
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
-        this.setState({ pokemons: data })
+        this.setState({ pokemons: data, show : 0 })
     });
-    this.setState({show : 0});
-
   }
 
   render() {
@@ -93,7 +91,7 @@ class Pokemon extends Component {
       loading = <Loading />;
     } else {
       loading = '';
-    } 
+    }
     return (
       <div>
         { loading }
@@ -110,10 +108,10 @@ class Pokemon extends Component {
                   <Grid item xs={3} key={pokemon.id}>
                     <Card className={classes.card}>
                       <CardActionArea className={classes.imageArea}>
-                        <Link key={pokemon.id} 
+                        <Link key={pokemon.id}
                           to={"/pokemon/" + pokemon.slug}
                           className="type-link">
-                          <LazyLoad 
+                          <LazyLoad
                             height={200}
                             width={200}
                             className="lazy-block"
@@ -138,10 +136,10 @@ class Pokemon extends Component {
                         </Typography>
                       </CardContent>
                       <CardActions>
-                        
+
                         {pokemon.types.map((type, i) => {
                           return (
-                            <Link key={type.id} 
+                            <Link key={type.id}
                               to={"/pokemons/type/" + type.name.toLowerCase()}
                               className="type-link">
                               <Button variant="contained" className={"type__" + type.name}>
@@ -150,14 +148,14 @@ class Pokemon extends Component {
                             </Link>
                           )
                         })}
-                       
-                        
+
+
                       </CardActions>
                     </Card>
                   </Grid>
               ))}
             </Grid>
-          </Container>  
+          </Container>
         </InfiniteScroll>
       </div>
     );
