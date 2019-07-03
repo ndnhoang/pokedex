@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 
+import Chart from 'react-apexcharts';
+
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -78,6 +80,9 @@ const styles = {
   avatar: {
     marginTop: '30px',
   },
+  mixed_chart: {
+    marginTop: '50px',
+  },
 };
 
 const API_URL = 'http://localhost:8000/api';
@@ -92,6 +97,53 @@ class PokemonDetail extends Component {
       slug: null,
       form: 0,
       statistic: null,
+      options: {
+        chart: {
+            id: "basic-bar",
+            height: 400,
+        },
+        xaxis: {
+            categories: ['HP', 'Attack', 'Defense', 'Sp. Attack', 'Sp. Defense', 'Speed'],
+            tickPlacement: 'on',
+            labels: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+            axisBorder: {
+                show: false,
+            },
+        },
+        yaxis: {
+            min: 0,
+            max: 250,
+        },
+        colors: [function({value, seriesIndex, w}) {
+            if (value < 50) {
+                return '#F46036';
+            } else if (value >= 50 && value < 100) {
+                return '#FEB019';
+            } else if (value >= 100 && value < 150) {
+                return '#4CAF50';
+            } else if (value >= 150 && value < 200) {
+                return '#008FFB';
+            } else {
+                return '#A300D6';
+            }
+        }],
+        plotOptions: {
+            bar: {
+                horizontal: true,
+            },
+        },
+      },
+      series: [
+        {
+            name: "statistic",
+            data: [0, 0, 0, 0, 0, 0],
+        }
+      ],
     };
     this.getPokemon = this.getPokemon.bind(this);
   }
@@ -114,15 +166,27 @@ class PokemonDetail extends Component {
       .then((data) => {
         this.setState({ pokemon: data, form: data[0].slug })
     });
-
     // get statistic
     axios.get(url_statistic)
         .then(res => res.data)
         .then((data) => {
         this.setState({ statistic: data })
+        if (this.state.statistic) {
+            const statistic = this.state.statistic;
+
+            this.setState({
+                series: [
+                    {
+                        name: "statistic",
+                        data: [statistic.hp, statistic.attack, statistic.defense, statistic.special_attack, statistic.special_defense, statistic.speed]
+                    },
+                ],
+            });
+        }
     });
 
     this.setState({show : 0, slug: slug});
+
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
@@ -138,11 +202,33 @@ class PokemonDetail extends Component {
    if(prevProps.match.params.slug !== this.state.slug)  {
     const slug = this.props.match.params.slug;
     const url = `${API_URL}/pokemon/${slug}`;
+    const url_statistic = `${API_URL}/pokemon/statistic/${slug}`;
+
     axios.get(url)
       .then(res => res.data)
       .then((data) => {
         this.setState({ pokemon: data, form: data[0].slug })
     });
+
+    // get statistic
+    axios.get(url_statistic)
+        .then(res => res.data)
+        .then((data) => {
+        this.setState({ statistic: data })
+        if (this.state.statistic) {
+            const statistic = this.state.statistic;
+
+            this.setState({
+                series: [
+                    {
+                        name: "statistic",
+                        data: [statistic.hp, statistic.attack, statistic.defense, statistic.special_attack, statistic.special_defense, statistic.speed]
+                    },
+                ],
+            });
+        }
+    });
+
     this.setState({show : 0, slug: slug});
     window.scrollTo(0, 0);
    }
@@ -311,6 +397,17 @@ class PokemonDetail extends Component {
                         </Grid>
                       }
                     </Grid>
+                  </Grid>
+                  <Grid item xs={6} className={classes.mixed_chart}>
+                    <Typography variant="h6" gutterBottom>
+                        Statistics
+                      </Typography>
+                    <Chart
+                        options={this.state.options}
+                        series={this.state.series}
+                        type="bar"
+                        width="500"
+                    />
                   </Grid>
                 </Grid>
               ))}
