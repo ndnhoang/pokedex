@@ -232,12 +232,168 @@ var ListDataTable = function() {
         });
     }
 
+    // list species
+    var ListSpecies = function() {
+        var list = $('#list_species');
+        var url = list.attr('url');
+        var remove_form = $('#remove_species_form');
+        list.DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: url,
+            columns: [
+                {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
+                {data: 'name', name: 'species.name'},
+            ],
+            order: [1, 'asc'],
+        });
+
+        var checkboxs = $('#checkboxs');
+        checkboxs.on('change', function() {
+            var checkbox_parent = this;
+            var table = checkboxs.parents('table').first();
+            if (table.length) {
+                var checkbox_child = table.find('input[type=checkbox]');
+                if (checkbox_child.length) {
+                    if (checkbox_parent.checked) {
+                        checkbox_child.each(function() {
+                            $(this).prop('checked', true);
+                        });
+                    } else {
+                        checkbox_child.each(function() {
+                            $(this).prop('checked', false);
+                        });
+                    }
+                }
+            }
+        });
+        remove_form.on('submit', function(e) {
+            var remove_arr = [];
+            var checkboxs_child = $('td input[type=checkbox]', list);
+            if (checkboxs_child.length) {
+                checkboxs_child.each(function() {
+                    if (this.checked) {
+                        var id = this.value;
+                        remove_arr.push(id);
+                    }
+                });
+            }
+            console.log(remove_arr.toString());
+            $('input[name=ids]', remove_form).val(remove_arr.toString());
+        });
+    }
+
+    // list egg groups
+    var ListEggGroups = function() {
+        var list = $('#list_egg_groups');
+        var url = list.attr('url');
+        var remove_form = $('#remove_egg_group_form');
+        list.DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: url,
+            columns: [
+                {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
+                {data: 'name', name: 'egg_groups.name'},
+            ],
+            order: [1, 'asc'],
+        });
+
+        var checkboxs = $('#checkboxs');
+        checkboxs.on('change', function() {
+            var checkbox_parent = this;
+            var table = checkboxs.parents('table').first();
+            if (table.length) {
+                var checkbox_child = table.find('input[type=checkbox]');
+                if (checkbox_child.length) {
+                    if (checkbox_parent.checked) {
+                        checkbox_child.each(function() {
+                            $(this).prop('checked', true);
+                        });
+                    } else {
+                        checkbox_child.each(function() {
+                            $(this).prop('checked', false);
+                        });
+                    }
+                }
+            }
+        });
+        remove_form.on('submit', function(e) {
+            var remove_arr = [];
+            var checkboxs_child = $('td input[type=checkbox]', list);
+            if (checkboxs_child.length) {
+                checkboxs_child.each(function() {
+                    if (this.checked) {
+                        var id = this.value;
+                        remove_arr.push(id);
+                    }
+                });
+            }
+            console.log(remove_arr.toString());
+            $('input[name=ids]', remove_form).val(remove_arr.toString());
+        });
+    }
+
+    // list colors
+    var ListColors = function() {
+        var list = $('#list_colors');
+        var url = list.attr('url');
+        var remove_form = $('#remove_color_form');
+        list.DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: url,
+            columns: [
+                {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
+                {data: 'name', name: 'colors.name'},
+            ],
+            order: [1, 'asc'],
+        });
+
+        var checkboxs = $('#checkboxs');
+        checkboxs.on('change', function() {
+            var checkbox_parent = this;
+            var table = checkboxs.parents('table').first();
+            if (table.length) {
+                var checkbox_child = table.find('input[type=checkbox]');
+                if (checkbox_child.length) {
+                    if (checkbox_parent.checked) {
+                        checkbox_child.each(function() {
+                            $(this).prop('checked', true);
+                        });
+                    } else {
+                        checkbox_child.each(function() {
+                            $(this).prop('checked', false);
+                        });
+                    }
+                }
+            }
+        });
+        remove_form.on('submit', function(e) {
+            var remove_arr = [];
+            var checkboxs_child = $('td input[type=checkbox]', list);
+            if (checkboxs_child.length) {
+                checkboxs_child.each(function() {
+                    if (this.checked) {
+                        var id = this.value;
+                        remove_arr.push(id);
+                    }
+                });
+            }
+            console.log(remove_arr.toString());
+            $('input[name=ids]', remove_form).val(remove_arr.toString());
+        });
+    }
+
     return {
         init: function() {
             ListPokemon();
             ListPokemonType();
             ListPokemonForm();
             ListStatistics();
+            ListSpecies();
+            ListEggGroups();
+            ListColors();
         }
     };
 }();

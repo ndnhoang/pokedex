@@ -106,6 +106,34 @@
                                 <li class="nav-item"><a href="{{ route('types') }}">List Pokemon Type</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('species') }}">Species</a>
+                            <ul>
+                                <li class="nav-item"><a href="{{ route('species.add') }}">Add Species</a></li>
+                                <li class="nav-item"><a href="{{ route('species') }}">List Species</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('egg_groups') }}">Egg Group</a>
+                            <ul>
+                                <li class="nav-item"><a href="{{ route('egg_group.add') }}">Add Egg Group</a></li>
+                                <li class="nav-item"><a href="{{ route('egg_groups') }}">List Egg Group</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('colors') }}">Colors</a>
+                            <ul>
+                                <li class="nav-item"><a href="{{ route('color.add') }}">Add Color</a></li>
+                                <li class="nav-item"><a href="{{ route('colors') }}">List Colors</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('colors') }}">Abilities</a>
+                            <ul>
+                                <li class="nav-item"><a href="{{ route('ability.add') }}">Add Ability</a></li>
+                                <li class="nav-item"><a href="{{ route('colors') }}">List Abilities</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 {{-- #Sidebar --}}

@@ -126,7 +126,7 @@
                                     <label for="hp">HP <span class="text-danger">*</span></label>
                                     <input type="text" name="hp" required id="hp" value="{{ old('hp') ? old('hp') : ($statistic ? $statistic->hp : '') }}" class="form-control">
                                 </div>
-                                {{-- <div class="form-group">
+                                <div class="form-group">
                                     <label for="attack">Attack <span class="text-danger">*</span></label>
                                     <input type="number" name="attack" required id="attack" value="{{ old('attack') ? old('attack') : ($statistic ? $statistic->attack : '') }}" class="form-control">
                                 </div>
@@ -145,7 +145,7 @@
                                 <div class="form-group">
                                     <label for="speed">Speed <span class="text-danger">*</span></label>
                                     <input type="number" name="speed" required id="speed" value="{{ old('speed') ? old('speed') : ($statistic ? $statistic->speed : '') }}" class="form-control">
-                                </div> --}}
+                                </div>
                             </div>
 
                             <div class="card-footer">

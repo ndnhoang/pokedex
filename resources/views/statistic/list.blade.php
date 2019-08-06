@@ -1,5 +1,5 @@
 @extends('layouts.app')
-<?php 
+<?php
     use App\Image;
 ?>
 @section('content')
@@ -26,7 +26,7 @@
                                 <th>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="checkboxs">
-                                        <label class="custom-control-label" for="checkboxs"</label>
+                                        <label class="custom-control-label" for="checkboxs"></label>
                                     </div>
                                 </th>
                                 <th>No.</th>
@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>

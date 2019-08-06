@@ -76,12 +76,12 @@ class StatisticController extends Controller
         if ($pokemon) {
             $data = $request->all();
             $rules = [
-                // 'hp' => 'required|integer',
-                // 'attack' => 'required|integer',
-                // 'defense' => 'required|integer',
-                // 'sp_attack' => 'required|integer',
-                // 'sp_defense' => 'required|integer',
-                // 'speed' => 'required|integer',
+                'hp' => 'required|integer',
+                'attack' => 'required|integer',
+                'defense' => 'required|integer',
+                'sp_attack' => 'required|integer',
+                'sp_defense' => 'required|integer',
+                'speed' => 'required|integer',
             ];
             $validator = Validator::make($data, $rules);
 
@@ -93,37 +93,24 @@ class StatisticController extends Controller
             try {
                 $statistic = Statistic::where('pokemon_id', $id)->first();
 
-                $value = $request->hp;
-                $value = explode(',', $value);
-
                 if ($statistic) {
-                    // $statistic->hp = $request->hp;
-                    // $statistic->attack = $request->attack;
-                    // $statistic->defense = $request->defense;
-                    // $statistic->special_attack = $request->sp_attack;
-                    // $statistic->special_defense = $request->sp_defense;
-                    // $statistic->speed = $request->speed;
-                    $statistic->hp = $value[0];
-                    $statistic->attack = $value[1];
-                    $statistic->defense = $value[2];
-                    $statistic->special_attack = $value[3];
-                    $statistic->special_defense = $value[4];
-                    $statistic->speed = $value[5];
+                    $statistic->hp = $request->hp;
+                    $statistic->attack = $request->attack;
+                    $statistic->defense = $request->defense;
+                    $statistic->special_attack = $request->sp_attack;
+                    $statistic->special_defense = $request->sp_defense;
+                    $statistic->speed = $request->speed;
+
 
                 } else {
                     $statistic = new Statistic;
-                    // $statistic->hp = $request->hp;
-                    // $statistic->attack = $request->attack;
-                    // $statistic->defense = $request->defense;
-                    // $statistic->special_attack = $request->sp_attack;
-                    // $statistic->special_defense = $request->sp_defense;
-                    // $statistic->speed = $request->speed;
-                    $statistic->hp = $value[0];
-                    $statistic->attack = $value[1];
-                    $statistic->defense = $value[2];
-                    $statistic->special_attack = $value[3];
-                    $statistic->special_defense = $value[4];
-                    $statistic->speed = $value[5];
+                    $statistic->hp = $request->hp;
+                    $statistic->attack = $request->attack;
+                    $statistic->defense = $request->defense;
+                    $statistic->special_attack = $request->sp_attack;
+                    $statistic->special_defense = $request->sp_defense;
+                    $statistic->speed = $request->speed;
+
                     $statistic->pokemon()->associate($pokemon);
                 }
 

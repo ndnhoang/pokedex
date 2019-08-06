@@ -1,7 +1,5 @@
 @extends('layouts.app')
-<?php
-    use App\Image;
-?>
+
 @section('content')
 
     <div class="row">
@@ -9,19 +7,19 @@
             @include('layouts.messages')
             <div class="card">
                 <div class="card-header">
-                    List Pokemon
+                    List Colors
                     <div class="tools float-right">
-                        <a class="btn btn-primary btn-sm" href="{{ route('pokemon.add') }}">Add</a>
-                        <form class="form-inline d-inline-flex" action="{{ route('pokemon.delete') }}" method="post" id="remove_pokemon_form">
+                        <a class="btn btn-primary btn-sm" href="{{ route('color.add') }}">Add</a>
+                        <form class="form-inline d-inline-flex" action="{{ route('color.delete') }}" method="post" id="remove_color_form">
                             @csrf
                             <input type="hidden" name="ids" value="">
-                            <button class="btn btn-secondary btn-sm" type="submit" id="remove_pokemon_btn">Remove</button>
+                            <button class="btn btn-secondary btn-sm" type="submit" id="remove_color_btn">Remove</button>
                         </form>
                     </div>
                 </div>
                 <div class="card-body">
                     @include('layouts.messages')
-                    <table id="list_pokemon" class="table table-striped table-bordered table-hover" url="{{ route('pokemons') }}">
+                    <table id="list_colors" class="table table-striped table-bordered table-hover" url="{{ route('colors') }}">
                         <thead>
                             <tr>
                                 <th>
@@ -30,10 +28,7 @@
                                         <label class="custom-control-label" for="checkboxs"></label>
                                     </div>
                                 </th>
-                                <th>No.</th>
-                                <th>Avatar</th>
                                 <th>Name</th>
-                                <th>Type</th>
                             </tr>
                         </thead>
                         <tbody>
